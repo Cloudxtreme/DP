@@ -11,18 +11,18 @@ from flask import Flask, Blueprint, render_template, request, redirect, send_fro
 from flask import jsonify
 import sqlite3 as sql
 import datetime
-import httpagentparser
 import subprocess
+
+import requests
+from requests import Request, Session
 
 ####################
 #### blueprints ####
 ####################
 
 login_blueprint = Blueprint('login', __name__, template_folder='templates')
-users_blueprint = Blueprint('users', __name__, template_folder='templates')
-clear_blueprint = Blueprint('clear', __name__, template_folder='templates')
-admin_blueprint = Blueprint('admin', __name__, template_folder='templates')
-db_blueprint = Blueprint('db', __name__, template_folder='templates')
+banlist_blueprint = Blueprint('banlist', __name__, template_folder='templates')
+policies_blueprint = Blueprint('policies', __name__, template_folder='templates')
 
 ################
 #### config ####
@@ -34,37 +34,131 @@ app = Flask(__name__)
 #### functions ####
 ###################
 
-def insert_readings(user, passwd, time, UA, remote_IP):
-    DATABASE = 'test.db'
-    with sql.connect(DATABASE) as con:
-        cur = con.cursor()
-        #cur.execute("CREATE TABLE users (user TEXT, passwd TEXT, time DATETIME)")
-        #cur.execute("alter table users add column time DATETIME")
-        #cur.execute("alter table users add column UA TEXT")
-	#cur.execute("alter table users add column remote_IP TEXT")
-        cur.execute("INSERT INTO users (user, passwd, time, UA, remote_IP) VALUES (?,?,?,?,?)", (user, passwd, time, UA, remote_IP))
-        con.commit()
+def login():
+    #Create a session to login
+    s = requests.Session()
+    loginurl = 'https://192.168.0.76/mgmt/system/user/login'
+    loginArgs = {'username':'radware','password':'abc1234.'}
+    cert = 'APSoluteVisionServer.pem'
+
+    #Try login
+    r = s.post(loginurl, verify=False, json=loginArgs)
+    r.json()
+    return s
+
+def get_rulesName(s):
+    #Get Policies from Device
+
+    #Network Protection Policies
+    url = 'https://192.168.0.76/mgmt/device/byip/192.168.0.11/config/rsIDSNewRulesTable'
+
+    r = s.get(url, verify=False)
+    data = r.json()
+
+    #Modify the response manual
+    data = data['rsIDSNewRulesTable']
+    RulesName = []
+    for d in data:
+        for k, v in d.items():
+            if k == 'rsIDSNewRulesName':
+                RulesName.append(v)
+    return RulesName
+
+def get_DPList(s):
+    url = 'https://192.168.0.76/mgmt/system/config/itemlist/alldevices'
+
+    r = s.get(url, verify=False)
+    data = r.json()
+
+    #Modify the response
+    DPName = []
+    DPIP = []
+    for d in data:
+        for k, v in d.items():
+            if k == 'name':
+                DPName.append(v)
+            if k == 'managementIp':
+                DPIP.append(v)
+    return DPName, DPIP
+
+def add_IPBlacklist(s, device, banIPs):
+    print(banIPs)
+    url = 'https://192.168.0.76/mgmt/device/byip/'+device+'/config/rsNewBlackListTable/'+banIPs
+    args = {
+        'rsNewBlackListName': 'Prueba',
+        'rsNewBlackListSrcNetwork': banIPs,
+        'rsNewBlackListDstNetwork': banIPs,
+        'rsNewBlackListSrcPortGroup': 'h225',
+        'rsNewBlackListDstPortGroup': 'h225',
+        'rsNewBlackListPhysicalPort': '',
+        'rsNewBlackListVLANTag': '',
+        'rsNewBlackListProtocol': '0',
+        'rsNewBlackListState': '1',
+        'rsNewBlackListDirection': '1',
+        'rsNewBlackListAction': '1',
+        'rsNewBlackListReportAction': '0',
+        'rsNewBlackListDescription': banIPs,
+        'rsNewBlackListExpirationHour': '0',
+        'rsNewBlackListExpirationMinute': '0',
+        'rsNewBlackListOriginatedIP': '0.0.0.0',
+        'rsNewBlackListOriginatedModule': '0',
+        'rsNewBlackListDetectorSecurityModule': '0',
+        'rsNewBlackListDynamicState': '2',
+        'rsNewBlackListPacketReport': '2'
+    }
+
+    r = s.post(url, verify=False, json=args)
+    r.json()
+
+def update_Policies(s, RulesName, enables):
+    #Report Only ~ rsIDSNewRulesAction: 0
+    #Block and Report ~ rsIDSNewRulesAction: 1
+    for rule in RulesName:
+        url = 'https://192.168.0.76/mgmt/device/byip/192.168.0.11/config/rsIDSNewRulesTable/'+rule
+        for enable in enables:
+            if enable == 0:
+                args = {'rsIDSNewRulesAction':'0'}
+
+            else:
+                args = {'rsIDSNewRulesAction':'1'}
+
+            r = s.put(url, verify=False, json=args)
+            r.json()
+
+
 
 ################
 #### routes ####
 ################
 
 @login_blueprint.route('/', methods=['GET', 'POST'])
-def login():
-    if request.method == 'POST':
-        user = request.form['user']
-        passwd = request.form['passwd']
-        currentDT = datetime.datetime.now().strftime("%Y-%m-%d %H:%M")
-        time = str(currentDT)
-        UA = request.headers.get('User-Agent')
-        UA = httpagentparser.simple_detect(UA)
-        UA = ' '.join(UA)
-	remote_IP = request.remote_addr
-        print (UA)
-        insert_readings(user, passwd, time, UA, remote_IP)
-	print(remote_IP)
-	subprocess.call(["iptables","-t", "nat", "-I", "PREROUTING","1", "-s", remote_IP, "-j" ,"ACCEPT"])
-	subprocess.call(["iptables", "-I", "FORWARD", "-s", remote_IP, "-j" ,"ACCEPT"])
-	return redirect("https://www.google.es", code=302)
+def main():
+    return render_template('banlist.html')
 
-    return render_template('index2.html')
+
+@banlist_blueprint.route('/banlist', methods=['GET', 'POST'])
+def banlist():
+    s = login()
+    if request.method == 'POST':
+        device = request.form['device']
+        banIPs = request.form['banIPs']
+        whiteIPs = request.form['whiteIPs']
+        add_IPBlacklist(s, device, banIPs)
+
+    DPName, DPIP = get_DPList(s)
+    DPDevices = zip(DPName, DPIP)
+
+    return render_template('banlist.html', DPDevices=DPDevices)
+
+
+@policies_blueprint.route('/policies', methods=['GET', 'POST'])
+def policies():
+    s = login()
+    RulesName = get_rulesName(s)
+
+    if request.method == 'POST':
+        enables = request.form.getlist('enables')
+        print(enables)
+        update_Policies(s, RulesName, enables)
+
+    return render_template('policies.html', RulesName=RulesName)

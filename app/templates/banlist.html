@@ -1,0 +1,53 @@
+{% extends 'layout.html' %}
+
+{% block header %}
+{% block title %}Admin{% endblock %}
+
+{% endblock %}
+{% block content %}
+<div class="container-fluid">
+	<div class="row">
+		<div class="col-md-6">
+		<form method="post" action="/">
+			<h2> Add to blacklist</h2>
+			<div class="form-group">
+	    		    <label for="dpSelect">DefensePro select</label>
+      			    <select class="form-control" id="dpSelect" name="device">
+		            {% for name, ip in DPDevices %}
+                            <option value="{{ ip }}">{{ name }} ~ {{ ip }}</option>
+
+		            </select>
+                        </div>
+
+                        <div class="form-group">
+                            <label for="exampleTextarea">IPs</label>
+                            <textarea class="form-control" id="exampleTextarea" rows="3" name="banIPs"></textarea>
+                        </div>
+		<button type="submit" class="btn btn-primary">Submit</button>
+		</div>
+		</form>
+
+		<div class="col-md-6">
+                <form method="post" action="/">
+                        <h2> Add to whitelist</h2>
+                        <div class="form-group">
+                            <label for="dpSelect">DefensePro select</label>
+                            <select class="form-control" id="dpSelect" name="device">
+
+                            <option value="{{ ip }}">{{ name }} ~ {{ ip }}</option>
+                            {% endfor %}
+                            </select>
+                        </div>
+
+                        <div class="form-group">
+                            <label for="exampleTextarea">IPs</label>
+                            <textarea class="form-control" id="exampleTextarea" rows="3" name="whiteIPs"></textarea>
+                        </div>
+                <button type="submit" class="btn btn-primary">Submit</button>
+                </div>
+                </form>
+
+		</div>
+	</div>
+</div>
+{% endblock %}

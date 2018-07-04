@@ -1,0 +1,47 @@
+{% extends 'layout.html' %}
+
+{% block header %}
+{% block title %}Admin{% endblock %}
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.3.1/jquery.js"></script>
+{% endblock %}
+{% block content %}
+<div class="container-fluid">
+	<form method="post" action="/policies">
+	<div class="row">
+		<div class="col-md-12">
+				<table class="table table-hover">
+				<tr class="table-light">
+					<th scope="row">Policy name</th>
+					<td>Report Only / Block and Report</td>
+				</tr>
+				{% for rule in RulesName %}
+				<tr class="table-light">
+                                        <td>{{ rule }}</td>
+                                        <td>
+						<input value="0" unchecked data-toggle="toggle" type="checkbox" name="enables" id="checked">
+						<input value="1" data-toggle="toggle" type="checkbox" name="enables" id="unchecked">
+					</td>
+                                </tr>
+				{% endfor %}
+				</table>
+		</div>
+	<button type="submit" class="btn btn-primary">Submit</button>
+	</div>
+	</form>
+</div>
+{% endblock %}
+
+{% block footer %}
+
+<script>
+    $(document).ready(function() {
+        if ($('#checked').is(":checked")) {
+            $("#unchecked").prop( "checked", false );
+        } 
+        else {
+            $("#unchecked").prop( "checked", true );
+        }
+    });
+</script>
+
+{% endblock %}
