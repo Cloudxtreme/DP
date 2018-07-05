@@ -14,12 +14,14 @@
 					<th scope="row">Policy name</th>
 					<td>Report Only / Block and Report</td>
 				</tr>
-				{% for rule in RulesName %}
+				{% for name, action in policies %}
 				<tr class="table-light">
-                                        <td>{{ rule }}</td>
+                                        <td>{{ name }}</td>
                                         <td>
-						<input value="0" unchecked data-toggle="toggle" type="checkbox" name="enables" id="checked">
-						<input value="1" data-toggle="toggle" type="checkbox" name="enables" id="unchecked">
+						 <select name="enables[]">
+							<option value="0" {% if "0" in action %} selected="selected" {% endif %}> Report Only</option>
+							<option value="1" {% if "1" in action %} selected="selected" {% endif %}> Block and Report</option>
+						 </select> 
 					</td>
                                 </tr>
 				{% endfor %}
@@ -32,16 +34,5 @@
 {% endblock %}
 
 {% block footer %}
-
-<script>
-    $(document).ready(function() {
-        if ($('#checked').is(":checked")) {
-            $("#unchecked").prop( "checked", false );
-        } 
-        else {
-            $("#unchecked").prop( "checked", true );
-        }
-    });
-</script>
 
 {% endblock %}

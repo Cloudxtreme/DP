@@ -12,6 +12,7 @@ from flask import jsonify
 import sqlite3 as sql
 import datetime
 import subprocess
+import time
 
 import requests
 from requests import Request, Session
@@ -110,22 +111,41 @@ def add_IPBlacklist(s, device, banIPs):
     r = s.post(url, verify=False, json=args)
     r.json()
 
-def update_Policies(s, RulesName, enables):
+def update_Policies(s, enablePolicies):
     #Report Only ~ rsIDSNewRulesAction: 0
     #Block and Report ~ rsIDSNewRulesAction: 1
-    for rule in RulesName:
+    for rule, enable in enablePolicies:
         url = 'https://192.168.0.76/mgmt/device/byip/192.168.0.11/config/rsIDSNewRulesTable/'+rule
-        for enable in enables:
-            if enable == 0:
-                args = {'rsIDSNewRulesAction':'0'}
+        print(rule)
+        print(enable)
+        if '0' in enable:
+            args = {'rsIDSNewRulesAction':'0'}
+            r = s.put(url, verify=False, json=args)
+            r.json()
 
-            else:
-                args = {'rsIDSNewRulesAction':'1'}
-
+        elif '1' in enable:
+            args = {'rsIDSNewRulesAction':'1'}
             r = s.put(url, verify=False, json=args)
             r.json()
 
 
+def get_policyAction(s):
+	#Report Only ~ rsIDSNewRulesAction: 0
+	#Block and Report ~ rsIDSNewRulesAction: 1
+
+	url = 'https://192.168.0.76/mgmt/device/byip/192.168.0.11/config/rsIDSNewRulesTable'
+
+	r = s.get(url, verify=False)
+	data = r.json()
+
+	#Modify the response manual
+	data = data['rsIDSNewRulesTable']
+	policyAction = []
+	for d in data:
+    		for k, v in d.items():
+        		if k == 'rsIDSNewRulesAction':
+            			policyAction.append(v)
+	return policyAction
 
 ################
 #### routes ####
@@ -146,6 +166,7 @@ def banlist():
         add_IPBlacklist(s, device, banIPs)
 
     DPName, DPIP = get_DPList(s)
+    # https://stackoverflow.com/questions/17139807/jinja2-multiple-variables-in-same-for-loop
     DPDevices = zip(DPName, DPIP)
 
     return render_template('banlist.html', DPDevices=DPDevices)
@@ -155,10 +176,16 @@ def banlist():
 def policies():
     s = login()
     RulesName = get_rulesName(s)
+    policyAction = get_policyAction(s)
+    policies = zip(RulesName, policyAction)
+    print(policyAction)
 
     if request.method == 'POST':
-        enables = request.form.getlist('enables')
+        enables = request.form.getlist('enables[]')
         print(enables)
-        update_Policies(s, RulesName, enables)
+        enablePolicies = zip(RulesName, enables)
+        update_Policies(s, enablePolicies)
+        time.sleep(1)
+        return redirect('/policies')
 
-    return render_template('policies.html', RulesName=RulesName)
+    return render_template('policies.html', policies=policies)
