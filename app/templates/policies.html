@@ -9,14 +9,26 @@
 	<form method="post" action="/policies">
 	<div class="row">
 		<div class="col-md-12">
-				<table class="table table-hover">
-				<tr class="table-light">
+			<div class="form-group">
+	    		    <label for="dpSelect">DefensePro select</label>
+      			    <select class="form-control" id="dpSelect" name="device">
+		            {% for name, ip in DPDevices %}
+                            <option id="device" value="{{ ip }}" name="device">{{ name }} ~ {{ ip }}</option>
+			    {% endfor %}
+		            </select>
+			</div>
+				<table class="table table-hover" id="policiesTable">
+				<thead>
+				<!--<tr class="table-light">-->
 					<th scope="row">Policy name</th>
 					<td>Report Only / Block and Report</td>
-				</tr>
+				<!--</tr>-->
+				</thead>
+				<tbody>
+<!--
 				{% for name, action in policies %}
 				<tr class="table-light">
-                                        <td>{{ name }}</td>
+                                        <td id="policyName">{{ name }}</td>
                                         <td>
 						 <select name="enables[]">
 							<option value="0" {% if "0" in action %} selected="selected" {% endif %}> Report Only</option>
@@ -25,14 +37,55 @@
 					</td>
                                 </tr>
 				{% endfor %}
+-->
+				</tbody>
 				</table>
 		</div>
 	<button type="submit" class="btn btn-primary">Submit</button>
 	</div>
 	</form>
 </div>
+<p>{{RulesNam}}</p>
 {% endblock %}
 
 {% block footer %}
+
+<script type=text/javascript>
+  $SCRIPT_ROOT = {{ request.script_root|tojson|safe }};
+</script>
+
+<script type=text/javascript>
+  $(function() {
+    $('option#device').bind('click', function() {
+      $.getJSON($SCRIPT_ROOT + '/_select_DP', {
+        a: $('option[name="device"]').val(),
+      }, function(data) {
+	console.log(data.JSONRules)
+<!--
+$('#policiesTable').dynatable({
+  dataset: {
+    ajax: true,
+    ajaxUrl: '/_select_DP?a=192.168.0.11',
+    ajaxOnLoad: true,
+    records: []
+  }
+});
+-->
+
+	var $records = $('#json-records'),
+    	    myRecords = JSON.parse($records.text());	
+
+	$('#policiesTable').dynatable({
+  	    dataset: {
+    	    records: myRecords
+  	    }
+	});
+
+      });
+      return false;
+    });
+  });
+</script>
+
 
 {% endblock %}

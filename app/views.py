@@ -13,6 +13,7 @@ import sqlite3 as sql
 import datetime
 import subprocess
 import time
+import json
 
 import requests
 from requests import Request, Session
@@ -24,6 +25,7 @@ from requests import Request, Session
 login_blueprint = Blueprint('login', __name__, template_folder='templates')
 banlist_blueprint = Blueprint('banlist', __name__, template_folder='templates')
 policies_blueprint = Blueprint('policies', __name__, template_folder='templates')
+ajax_blueprint = Blueprint('ajax', __name__, template_folder='templates')
 
 ################
 #### config ####
@@ -47,23 +49,31 @@ def login():
     r.json()
     return s
 
-def get_rulesName(s):
+def get_rulesName(s, *device):
     #Get Policies from Device
-
+    device = ''.join(device)
+    print(device)
     #Network Protection Policies
-    url = 'https://192.168.0.76/mgmt/device/byip/192.168.0.11/config/rsIDSNewRulesTable'
-
-    r = s.get(url, verify=False)
-    data = r.json()
+    if device:
+        url = 'https://192.168.0.76/mgmt/device/byip/'+device+'/config/rsIDSNewRulesTable'
+        r = s.get(url, verify=False)
+        data = r.json()
 
     #Modify the response manual
-    data = data['rsIDSNewRulesTable']
-    RulesName = []
-    for d in data:
-        for k, v in d.items():
-            if k == 'rsIDSNewRulesName':
-                RulesName.append(v)
-    return RulesName
+        data = data['rsIDSNewRulesTable']
+        RulesName = []
+        for d in data:
+            for k, v in d.items():
+                if k == 'rsIDSNewRulesName':
+                    RulesName.append(v)
+        return RulesName
+
+    else:
+        url = 'https://192.168.0.76/mgmt/device/byip/10.20.30.40/config/rsIDSNewRulesTable'
+
+        r = s.get(url, verify=False)
+        data = r.json()
+        return ''
 
 def get_DPList(s):
     url = 'https://192.168.0.76/mgmt/system/config/itemlist/alldevices'
@@ -129,7 +139,7 @@ def update_Policies(s, enablePolicies):
             r.json()
 
 
-def get_policyAction(s):
+def get_policyAction(s, *device):
 	#Report Only ~ rsIDSNewRulesAction: 0
 	#Block and Report ~ rsIDSNewRulesAction: 1
 
@@ -146,6 +156,28 @@ def get_policyAction(s):
         		if k == 'rsIDSNewRulesAction':
             			policyAction.append(v)
 	return policyAction
+
+
+################
+####  AJAX  ####
+################
+
+@ajax_blueprint.route('/_select_DP', methods=['GET'])
+def select_DP():
+	s = login()
+	device = request.args.get('a')
+	# Get Rules from device
+	RulesName = get_rulesName(s, device)
+
+	# Get RulesAction from device
+	RulesAction = get_policyAction(s, device)
+
+	# Two lists to json
+	JSONRules = json.dumps(
+		[{'RuleName':name, 'RuleAction':action} for name, action in zip(RulesName, RulesAction)]
+	)
+
+	return jsonify(JSONRules=JSONRules)
 
 ################
 #### routes ####
@@ -173,12 +205,15 @@ def banlist():
 
 
 @policies_blueprint.route('/policies', methods=['GET', 'POST'])
-def policies():
+def policies(*RulesName, **RulesAction):
     s = login()
+    # Get all rules list
     RulesName = get_rulesName(s)
     policyAction = get_policyAction(s)
-    policies = zip(RulesName, policyAction)
-    print(policyAction)
+
+    # Get all devices list (name + ip)
+    DPName, DPIP = get_DPList(s)
+    DPDevices = zip(DPName, DPIP)
 
     if request.method == 'POST':
         enables = request.form.getlist('enables[]')
@@ -188,4 +223,4 @@ def policies():
         time.sleep(1)
         return redirect('/policies')
 
-    return render_template('policies.html', policies=policies)
+    return render_template('policies.html', DPDevices=DPDevices)
