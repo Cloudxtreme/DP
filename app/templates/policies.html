@@ -67,9 +67,18 @@
       $.getJSON($SCRIPT_ROOT + '/_select_DP', {
         a: $('option[name="device"]').val(),
       }, function(data) {
+	// Delete policies table
+	$( ".policies-table" ).remove();
+	// Get policies JSON
 	console.log(data.JSONRules);
 	var data = data.JSONRules;
-	$.jsontotable(data, { id: '#jsontotable', header: true, className: 'table table-hover' });
+	// JSON to table
+	$.jsontotable(data, { id: '#jsontotable', header: true, className: 'table table-hover policies-table' });
+
+
+			$('#jsontotable > table > tbody > tr > td:nth-child(2)').append('<select name="enables[]"> <option value="0" selected="selected"> Report Only</option> <option value="1"> Block and Report</option></select>');
+
+
       });
       return false;
     });
