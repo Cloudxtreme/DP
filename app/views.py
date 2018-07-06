@@ -169,17 +169,21 @@ def select_DP():
 	device = request.args.get('a')
 	# Get Rules from device
 	RulesName = get_rulesName(s, device)
+	print(RulesName)
 
 	# Get RulesAction from device
 	RulesAction = get_policyAction(s, device)
+	print(RulesAction)
 
 	# Two lists to json
 	JSONRules = json.dumps(
-		[{'RuleName':name, 'RuleAction':action} for name, action in zip(RulesName, RulesAction)]
+		[{'RuleAction':action, 'RuleName':name} for action, name in zip(RulesAction, RulesName)]
 	)
 	#JSONRules = [{'RuleName':name, 'RuleAction':action} for name, action in zip(RulesName, RulesAction)]
+	print(JSONRules)
 
 	return jsonify(JSONRules=JSONRules)
+
 
 ################
 #### routes ####
@@ -209,15 +213,15 @@ def banlist():
 @policies_blueprint.route('/policies', methods=['GET', 'POST'])
 def policies(*RulesName, **RulesAction):
     s = login()
-    # Get all rules list
-    RulesName = get_rulesName(s)
-    policyAction = get_policyAction(s)
 
     # Get all devices list (name + ip)
     DPName, DPIP = get_DPList(s)
     DPDevices = zip(DPName, DPIP)
 
     if request.method == 'POST':
+        device = request.form['device']
+        print(device)
+        RulesName = get_rulesName(s, device)
         enables = request.form.getlist('enables[]')
         print(enables)
         enablePolicies = zip(RulesName, enables)
