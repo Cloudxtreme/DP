@@ -8,24 +8,31 @@
 <div class="container-fluid">
 	<form method="post" action="/policies">
 	<div class="row">
-		<div class="col-md-12">
-			<div class="form-group">
-	    		    <label for="dpSelect">DefensePro select</label>
-      			    <select class="form-control" id="dpSelect" name="device">
-		            {% for name, ip in DPDevices %}
-                            <option id="device" value="{{ ip }}" name="device">{{ name }} ~ {{ ip }}</option>
-			    {% endfor %}
-		            </select>
-			</div>
+		<div class="col-md-12" id="policies">
+			    <div class="col-lg-2" id="img_defensepro">
+			    	<img src="static/img/device_defensepro.png" alt="">
+			    </div> 
+			    <div class="col-lg-10" id="select_defensepro">
+      			    	<select class="form-control" id="dpSelect" name="device">
+		            	{% for name, ip in DPDevices %}
+                            	<option id="device" value="{{ ip }}" name="device">{{ name }} ~ {{ ip }}</option>
+			    	{% endfor %}
+		            	</select>
+			    </div>
+
+			    <div id="jsontotable" class="jsontotable">
+			    </div>
+
+				<!--
 				<table class="table table-hover" id="policiesTable">
 				<thead>
-				<!--<tr class="table-light">-->
+				<tr class="table-light">
 					<th scope="row">Policy name</th>
 					<td>Report Only / Block and Report</td>
-				<!--</tr>-->
+				</tr>
 				</thead>
 				<tbody>
-<!--
+
 				{% for name, action in policies %}
 				<tr class="table-light">
                                         <td id="policyName">{{ name }}</td>
@@ -37,15 +44,15 @@
 					</td>
                                 </tr>
 				{% endfor %}
--->
+
 				</tbody>
 				</table>
+				-->
+			<button type="submit" class="btn btn-primary" id="submit_policies">Submit</button>
 		</div>
-	<button type="submit" class="btn btn-primary">Submit</button>
 	</div>
 	</form>
 </div>
-<p>{{RulesNam}}</p>
 {% endblock %}
 
 {% block footer %}
@@ -60,27 +67,9 @@
       $.getJSON($SCRIPT_ROOT + '/_select_DP', {
         a: $('option[name="device"]').val(),
       }, function(data) {
-	console.log(data.JSONRules)
-<!--
-$('#policiesTable').dynatable({
-  dataset: {
-    ajax: true,
-    ajaxUrl: '/_select_DP?a=192.168.0.11',
-    ajaxOnLoad: true,
-    records: []
-  }
-});
--->
-
-	var $records = $('#json-records'),
-    	    myRecords = JSON.parse($records.text());	
-
-	$('#policiesTable').dynatable({
-  	    dataset: {
-    	    records: myRecords
-  	    }
-	});
-
+	console.log(data.JSONRules);
+	var data = data.JSONRules;
+	$.jsontotable(data, { id: '#jsontotable', header: true, className: 'table table-hover' });
       });
       return false;
     });

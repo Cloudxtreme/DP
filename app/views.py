@@ -14,6 +14,7 @@ import datetime
 import subprocess
 import time
 import json
+import pprint
 
 import requests
 from requests import Request, Session
@@ -176,6 +177,7 @@ def select_DP():
 	JSONRules = json.dumps(
 		[{'RuleName':name, 'RuleAction':action} for name, action in zip(RulesName, RulesAction)]
 	)
+	#JSONRules = [{'RuleName':name, 'RuleAction':action} for name, action in zip(RulesName, RulesAction)]
 
 	return jsonify(JSONRules=JSONRules)
 
