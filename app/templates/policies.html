@@ -67,18 +67,21 @@
       $.getJSON($SCRIPT_ROOT + '/_select_DP', {
         a: $('option[name="device"]').val(),
       }, function(data) {
+
 	// Delete policies table
 	$( ".policies-table" ).remove();
+
 	// Get policies JSON
 	console.log(data.JSONRules);
 	var data = data.JSONRules;
+
 	// JSON to table
 	$.jsontotable(data, { id: '#jsontotable', header: false, className: 'table table-hover policies-table' });
 
-	$( "td:nth-child(2):contains('0')" ).append('<select name="enables[]"> <option value="0" selected="selected"> Report Only </option> <option value="1"> Block and Report</option></select>');
+	$( "td:nth-child(2):contains('0')" ).empty().append('<select name="enables[]"> <option value="0" selected="selected"> Report Only </option> <option value="1"> Block and Report</option></select>');
 
-	$( "td:nth-child(2):contains('1')" ).append('<select name="enables[]"> <option value="0"> Report Only </option> <option value="1" selected="selected"> Block and Report</option></select>');
-
+	$( "td:nth-child(2):contains('1')" ).empty().append('<select name="enables[]"> <option value="0"> Report Only </option> <option value="1" selected="selected"> Block and Report</option></select>');
+	
 // $('#jsontotable > table > tbody > tr > td:nth-child(2)').append('<select name="enables[]"> <option value="0" selected="selected"> Report Only</option> <option value="1"> Block and Report</option></select>');
 
 
