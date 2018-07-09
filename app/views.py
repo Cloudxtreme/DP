@@ -94,33 +94,66 @@ def get_DPList(s):
     return DPName, DPIP
 
 def add_IPBlacklist(s, device, banIPs):
-    print(banIPs)
-    url = 'https://192.168.0.76/mgmt/device/byip/'+device+'/config/rsNewBlackListTable/'+banIPs
-    args = {
-        'rsNewBlackListName': 'Prueba',
-        'rsNewBlackListSrcNetwork': banIPs,
-        'rsNewBlackListDstNetwork': banIPs,
-        'rsNewBlackListSrcPortGroup': 'h225',
-        'rsNewBlackListDstPortGroup': 'h225',
-        'rsNewBlackListPhysicalPort': '',
-        'rsNewBlackListVLANTag': '',
-        'rsNewBlackListProtocol': '0',
-        'rsNewBlackListState': '1',
-        'rsNewBlackListDirection': '1',
-        'rsNewBlackListAction': '1',
-        'rsNewBlackListReportAction': '0',
-        'rsNewBlackListDescription': banIPs,
-        'rsNewBlackListExpirationHour': '0',
-        'rsNewBlackListExpirationMinute': '0',
-        'rsNewBlackListOriginatedIP': '0.0.0.0',
-        'rsNewBlackListOriginatedModule': '0',
-        'rsNewBlackListDetectorSecurityModule': '0',
-        'rsNewBlackListDynamicState': '2',
-        'rsNewBlackListPacketReport': '2'
-    }
+    for banIP in banIPs:
+        url = 'https://192.168.0.76/mgmt/device/byip/'+device+'/config/rsNewBlackListTable/'+banIP
+        args = {
+            'rsNewBlackListName': banIP,
+            'rsNewBlackListSrcNetwork': banIP,
+            'rsNewBlackListDstNetwork': banIP,
+            'rsNewBlackListSrcPortGroup': '',
+            'rsNewBlackListDstPortGroup': '',
+            'rsNewBlackListPhysicalPort': '',
+            'rsNewBlackListVLANTag': '',
+            'rsNewBlackListProtocol': '0',
+            'rsNewBlackListState': '1',
+            'rsNewBlackListDirection': '1',
+            'rsNewBlackListAction': '1',
+            'rsNewBlackListReportAction': '0',
+            'rsNewBlackListDescription': banIP,
+            'rsNewBlackListExpirationHour': '0',
+            'rsNewBlackListExpirationMinute': '0',
+            'rsNewBlackListOriginatedIP': '0.0.0.0',
+            'rsNewBlackListOriginatedModule': '0',
+            'rsNewBlackListDetectorSecurityModule': '0',
+            'rsNewBlackListDynamicState': '2',
+            'rsNewBlackListPacketReport': '2'
+        }
 
-    r = s.post(url, verify=False, json=args)
-    r.json()
+        r = s.post(url, verify=False, json=args)
+        print(url)
+        r.json()
+        print(r.json())
+
+def add_IPWhitelist(s, device, whiteIPs):
+    for whiteIP in whiteIPs:
+        url = 'https://192.168.0.76/mgmt/device/byip/'+device+'/config/rsNewWhiteListTable/'+whiteIP
+        args = {
+            'rsNewBlackListName': whiteIP,
+            'rsNewBlackListSrcNetwork': whiteIP,
+            'rsNewBlackListDstNetwork': whiteIP,
+            'rsNewBlackListSrcPortGroup': '',
+            'rsNewBlackListDstPortGroup': '',
+            'rsNewBlackListPhysicalPort': '',
+            'rsNewBlackListVLANTag': '',
+            'rsNewBlackListProtocol': '0',
+            'rsNewBlackListState': '1',
+            'rsNewBlackListDirection': '1',
+            'rsNewBlackListAction': '1',
+            'rsNewBlackListReportAction': '0',
+            'rsNewBlackListDescription': whiteIP,
+            'rsNewBlackListExpirationHour': '0',
+            'rsNewBlackListExpirationMinute': '0',
+            'rsNewBlackListOriginatedIP': '0.0.0.0',
+            'rsNewBlackListOriginatedModule': '0',
+            'rsNewBlackListDetectorSecurityModule': '0',
+            'rsNewBlackListDynamicState': '2',
+            'rsNewBlackListPacketReport': '2'
+        }
+
+        r = s.post(url, verify=False, json=args)
+        print(url)
+        r.json()
+        print(r.json())
 
 def update_Policies(s, enablePolicies):
     #Report Only ~ rsIDSNewRulesAction: 0
@@ -177,9 +210,10 @@ def select_DP():
 
 	# Two lists to json
 	JSONRules = json.dumps(
-		[{'RuleAction':action, 'RuleName':name} for action, name in zip(RulesAction, RulesName)]
+		[{'RuleName':name, 'RuleXAction':action} for name, action in zip(RulesName, RulesAction)], sort_keys=True
 	)
 	#JSONRules = [{'RuleName':name, 'RuleAction':action} for name, action in zip(RulesName, RulesAction)]
+	print("=============")
 	print(JSONRules)
 
 	return jsonify(JSONRules=JSONRules)
@@ -197,11 +231,21 @@ def main():
 @banlist_blueprint.route('/banlist', methods=['GET', 'POST'])
 def banlist():
     s = login()
+
     if request.method == 'POST':
         device = request.form['device']
-        banIPs = request.form['banIPs']
-        whiteIPs = request.form['whiteIPs']
-        add_IPBlacklist(s, device, banIPs)
+        print(device)
+
+        if request.form['banIPs']:
+            banIPs = request.form['banIPs']
+            banIPs = banIPs.split(",")
+            print(banIPs)
+            add_IPBlacklist(s, device, banIPs)
+
+        if request.form['whiteIPs']:
+            whiteIPs = request.form['whiteIPs']
+            whiteIPs = whiteIPs.split(",")
+            add_IPWhitelist(s, device, whiteIPs)
 
     DPName, DPIP = get_DPList(s)
     # https://stackoverflow.com/questions/17139807/jinja2-multiple-variables-in-same-for-loop
