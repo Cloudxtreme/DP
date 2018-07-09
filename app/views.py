@@ -128,26 +128,26 @@ def add_IPWhitelist(s, device, whiteIPs):
     for whiteIP in whiteIPs:
         url = 'https://192.168.0.76/mgmt/device/byip/'+device+'/config/rsNewWhiteListTable/'+whiteIP
         args = {
-            'rsNewBlackListName': whiteIP,
-            'rsNewBlackListSrcNetwork': whiteIP,
-            'rsNewBlackListDstNetwork': whiteIP,
-            'rsNewBlackListSrcPortGroup': '',
-            'rsNewBlackListDstPortGroup': '',
-            'rsNewBlackListPhysicalPort': '',
-            'rsNewBlackListVLANTag': '',
-            'rsNewBlackListProtocol': '0',
-            'rsNewBlackListState': '1',
-            'rsNewBlackListDirection': '1',
-            'rsNewBlackListAction': '1',
-            'rsNewBlackListReportAction': '0',
-            'rsNewBlackListDescription': whiteIP,
-            'rsNewBlackListExpirationHour': '0',
-            'rsNewBlackListExpirationMinute': '0',
-            'rsNewBlackListOriginatedIP': '0.0.0.0',
-            'rsNewBlackListOriginatedModule': '0',
-            'rsNewBlackListDetectorSecurityModule': '0',
-            'rsNewBlackListDynamicState': '2',
-            'rsNewBlackListPacketReport': '2'
+            'rsNewWhiteListName': whiteIP,
+            'rsNewWhiteListSrcNetwork': whiteIP,
+            'rsNewWhiteListDstNetwork': whiteIP,
+            'rsNewWhiteListSrcPortGroup': '',
+            'rsNewWhiteListDstPortGroup': '',
+            'rsNewWhiteListPhysicalPort': '',
+            'rsNewWhiteListVLANTag': '',
+            'rsNewWhiteListProtocol': '0',
+            'rsNewWhiteListState': '1',
+            'rsNewWhiteListDirection': '1',
+            'rsNewWhiteListAction': '0',
+            'rsNewWhiteListReportAction': '0',
+            'rsNewWhiteListDescription': whiteIP,
+            'rsNewWhiteListAllModules': '1',
+            'rsNewWhiteListSynModule': '1',
+            'rsNewWhiteListStatefulModule': '1',
+            'rsNewWhiteListScanningModule': '1',
+            'rsNewWhiteListSignatureModule': '1',
+            'rsNewWhiteListHttpFloodModule': '1',
+            'rsNewWhiteListServerCrackingModule': '1'
         }
 
         r = s.post(url, verify=False, json=args)
