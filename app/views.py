@@ -50,6 +50,16 @@ def login():
     r.json()
     return s
 
+def lock(s, device):
+    url = 'https://192.168.0.76/mgmt/system/config/tree/device/byip/'+device+'/lock'
+    r = s.post(url, verify=False)
+    r.json()
+
+def unlock(s, device):
+    url = 'https://192.168.0.76/mgmt/system/config/tree/device/byip/'+device+'/unlock'
+    r = s.post(url, verify=False)
+    r.json()
+
 def get_rulesName(s, *device):
     #Get Policies from Device
     device = ''.join(device)
@@ -240,12 +250,16 @@ def banlist():
             banIPs = request.form['banIPs']
             banIPs = banIPs.split(",")
             print(banIPs)
+            lock(s, device)
             add_IPBlacklist(s, device, banIPs)
+            unlock(s, device)
 
         if request.form['whiteIPs']:
             whiteIPs = request.form['whiteIPs']
             whiteIPs = whiteIPs.split(",")
+            lock(s, device)
             add_IPWhitelist(s, device, whiteIPs)
+            unlock(s, device)
 
     DPName, DPIP = get_DPList(s)
     # https://stackoverflow.com/questions/17139807/jinja2-multiple-variables-in-same-for-loop
@@ -269,8 +283,11 @@ def policies(*RulesName, **RulesAction):
         enables = request.form.getlist('enables[]')
         print(enables)
         enablePolicies = zip(RulesName, enables)
+        lock(s, device)
+        time.sleep(1)
         update_Policies(s, enablePolicies)
         time.sleep(1)
+        unlock(s, device)
         return redirect('/policies')
 
     return render_template('policies.html', DPDevices=DPDevices)

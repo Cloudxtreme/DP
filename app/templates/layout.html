@@ -25,8 +25,9 @@
         {% endblock %}
     </head>
     <body>
+<!--
 <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
-  <a class="navbar-brand" href="#">DP Dashboard</a>
+ <a class="navbar-brand" href="#">DP Dashboard</a>
   <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarColor02" aria-controls="navbarColor02" aria-expanded="false" aria-label="Toggle navigation">
     <span class="navbar-toggler-icon"></span>
   </button>
@@ -43,13 +44,31 @@
         <a class="nav-link" href="/policies">Policies</a>
       </li>
     </ul>
-  </div>
+</div>
 </nav>
+-->
 
+<ul class="nav nav-pills flex-column sidebar">
+  <li class="nav-item">
+    <a class="nav-link" href="/banlist"><i class="fas fa-ban"></i> Black/White List</a>
+  </li>
+  <li class="nav-item">
+    <a class="nav-link" href="/policies"><i class="fas fa-clipboard-list"></i> Policies</a>
+  </li>
+</ul>
+<i id="hide" class="fas fa-angle-left"></i>
     {% block content %}{% endblock %}
 
     </body>
     <footer class="navbar-default navbar-fixed-bottom">
     {% block footer %}{% endblock %}
     </footer>
+
+<script>
+$("#hide").click(function(){
+    $("ul.nav").toggle();
+    $("#hide").toggleClass('fa-angle-left fa-bars');
+});
+</script>
+
 </html>

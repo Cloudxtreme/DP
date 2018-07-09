@@ -32,3 +32,34 @@
 #blacklist {
 	float:left;
 }
+
+.sidebar {
+	width: 15%;
+	float: left;
+	height: 100%;
+	background-color: #008cba;
+	padding: 1%;
+}
+
+.sidebar li a {
+	color: white;
+}
+
+.sidebar li a:hover {
+	background-color: #173b67;
+	padding-left: 5px;
+}
+
+#hide {
+	font-size: 24px;
+	padding: 1%;
+	background-color: #fff;
+	color: black;
+	border: 1px solid rgba(0, 0, 0, 0.125);
+}
+
+@media only screen and (max-width: 700px) {
+    .sidebar {
+        width: 100%;
+    }
+}
