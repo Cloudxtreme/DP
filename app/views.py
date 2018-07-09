@@ -109,7 +109,7 @@ def add_IPBlacklist(s, device, banIPs):
         args = {
             'rsNewBlackListName': banIP,
             'rsNewBlackListSrcNetwork': banIP,
-            'rsNewBlackListDstNetwork': banIP,
+            'rsNewBlackListDstNetwork': 'any',
             'rsNewBlackListSrcPortGroup': '',
             'rsNewBlackListDstPortGroup': '',
             'rsNewBlackListPhysicalPort': '',
