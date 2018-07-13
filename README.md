@@ -1,6 +1,15 @@
 # DP
 A simple admin dashboard to manage a DefensePro.
 
+## Configure
+Change the Vision IP Address, user and password on app/views.py:
+
+```
+VisionIP = "<IP>"
+VisionUser = "<USER>"
+VisionPasswd = "<PASSWORD>"
+```
+
 ## Usage
 
 ```
