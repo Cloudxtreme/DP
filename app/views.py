@@ -33,6 +33,12 @@ ajax_blueprint = Blueprint('ajax', __name__, template_folder='templates')
 ################
 
 app = Flask(__name__)
+global VisionIP
+global VisionUser
+global VisionPasswd
+VisionIP = "192.168.0.76"
+VisionUser = "radware"
+VisionPasswd = "abc1234."
 
 ###################
 #### functions ####
@@ -41,8 +47,8 @@ app = Flask(__name__)
 def login():
     #Create a session to login
     s = requests.Session()
-    loginurl = 'https://192.168.0.76/mgmt/system/user/login'
-    loginArgs = {'username':'radware','password':'abc1234.'}
+    loginurl = 'https://'+VisionIP+'/mgmt/system/user/login'
+    loginArgs = {'username': VisionUser,'password':VisionPasswd}
     cert = 'APSoluteVisionServer.pem'
 
     #Try login
@@ -51,12 +57,12 @@ def login():
     return s
 
 def lock(s, device):
-    url = 'https://192.168.0.76/mgmt/system/config/tree/device/byip/'+device+'/lock'
+    url = 'https://'+VisionIP+'/mgmt/system/config/tree/device/byip/'+device+'/lock'
     r = s.post(url, verify=False)
     r.json()
 
 def unlock(s, device):
-    url = 'https://192.168.0.76/mgmt/system/config/tree/device/byip/'+device+'/unlock'
+    url = 'https://'+VisionIP+'/mgmt/system/config/tree/device/byip/'+device+'/unlock'
     r = s.post(url, verify=False)
     r.json()
 
@@ -66,7 +72,7 @@ def get_rulesName(s, *device):
     print(device)
     #Network Protection Policies
     if device:
-        url = 'https://192.168.0.76/mgmt/device/byip/'+device+'/config/rsIDSNewRulesTable'
+        url = 'https://'+VisionIP+'/mgmt/device/byip/'+device+'/config/rsIDSNewRulesTable'
         r = s.get(url, verify=False)
         data = r.json()
 
@@ -80,14 +86,14 @@ def get_rulesName(s, *device):
         return RulesName
 
     else:
-        url = 'https://192.168.0.76/mgmt/device/byip/10.20.30.40/config/rsIDSNewRulesTable'
+        url = 'https://'+VisionIP+'/mgmt/device/byip/10.20.30.40/config/rsIDSNewRulesTable'
 
         r = s.get(url, verify=False)
         data = r.json()
         return ''
 
 def get_DPList(s):
-    url = 'https://192.168.0.76/mgmt/system/config/itemlist/alldevices'
+    url = 'https://'+VisionIP+'/mgmt/system/config/itemlist/alldevices'
 
     r = s.get(url, verify=False)
     data = r.json()
@@ -105,7 +111,7 @@ def get_DPList(s):
 
 def add_IPBlacklist(s, device, banIPs):
     for banIP in banIPs:
-        url = 'https://192.168.0.76/mgmt/device/byip/'+device+'/config/rsNewBlackListTable/'+banIP
+        url = 'https://'+VisionIP+'/mgmt/device/byip/'+device+'/config/rsNewBlackListTable/'+banIP
         args = {
             'rsNewBlackListName': banIP,
             'rsNewBlackListSrcNetwork': banIP,
@@ -136,7 +142,7 @@ def add_IPBlacklist(s, device, banIPs):
 
 def add_IPWhitelist(s, device, whiteIPs):
     for whiteIP in whiteIPs:
-        url = 'https://192.168.0.76/mgmt/device/byip/'+device+'/config/rsNewWhiteListTable/'+whiteIP
+        url = 'https://'+VisionIP+'/mgmt/device/byip/'+device+'/config/rsNewWhiteListTable/'+whiteIP
         args = {
             'rsNewWhiteListName': whiteIP,
             'rsNewWhiteListSrcNetwork': whiteIP,
@@ -169,7 +175,7 @@ def update_Policies(s, enablePolicies):
     #Report Only ~ rsIDSNewRulesAction: 0
     #Block and Report ~ rsIDSNewRulesAction: 1
     for rule, enable in enablePolicies:
-        url = 'https://192.168.0.76/mgmt/device/byip/192.168.0.11/config/rsIDSNewRulesTable/'+rule
+        url = 'https://'+VisionIP+'/mgmt/device/byip/192.168.0.11/config/rsIDSNewRulesTable/'+rule
         print(rule)
         print(enable)
         if '0' in enable:
@@ -187,7 +193,7 @@ def get_policyAction(s, *device):
 	#Report Only ~ rsIDSNewRulesAction: 0
 	#Block and Report ~ rsIDSNewRulesAction: 1
 
-	url = 'https://192.168.0.76/mgmt/device/byip/192.168.0.11/config/rsIDSNewRulesTable'
+	url = 'https://'+VisionIP+'/mgmt/device/byip/192.168.0.11/config/rsIDSNewRulesTable'
 
 	r = s.get(url, verify=False)
 	data = r.json()
@@ -271,7 +277,6 @@ def banlist():
 @policies_blueprint.route('/policies', methods=['GET', 'POST'])
 def policies(*RulesName, **RulesAction):
     s = login()
-
     # Get all devices list (name + ip)
     DPName, DPIP = get_DPList(s)
     DPDevices = zip(DPName, DPIP)
