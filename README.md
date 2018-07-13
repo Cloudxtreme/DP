@@ -2,9 +2,9 @@
 A simple admin dashboard to manage a DefensePro.
 
 ## Configure
-Change the Vision IP Address, user and password on app/views.py:
+Change the Vision IP Address, user and password on ```app/views.py```:
 
-```
+```python
 VisionIP = "<IP>"
 VisionUser = "<USER>"
 VisionPasswd = "<PASSWORD>"
@@ -12,7 +12,7 @@ VisionPasswd = "<PASSWORD>"
 
 ## Usage
 
-```
+```bash
 $ . venv/bin/activate
 $ python -V
 Python 3.5.2
