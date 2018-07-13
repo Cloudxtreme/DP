@@ -22,12 +22,17 @@
 
 	<script src="static/js/qunit-1.12.0.js"></script>
 	<script src="static/js/jquery.jsontotable.js"></script>
+
+	<!-- JQuery Confirm -->
+	<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/jquery-confirm/3.3.0/jquery-confirm.min.css">
+	<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-confirm/3.3.0/jquery-confirm.min.js"></script>
+
         {% endblock %}
     </head>
     <body>
 <!--
 <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
- <a class="navbar-brand" href="#">DP Dashboard</a>
+  <h2>dp dashboard</h2>
   <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarColor02" aria-controls="navbarColor02" aria-expanded="false" aria-label="Toggle navigation">
     <span class="navbar-toggler-icon"></span>
   </button>
@@ -48,6 +53,11 @@
 </nav>
 -->
 
+<div class="logo">
+            <a href="#">DP Dashboard</a>
+</div>
+
+<div id="divFixed" class="input-group mb-3">
 <ul class="nav nav-pills flex-column sidebar">
   <li class="nav-item">
     <a class="nav-link" href="/banlist"><i class="fas fa-ban"></i> Black/White List</a>
@@ -57,6 +67,8 @@
   </li>
 </ul>
 <i id="hide" class="fas fa-angle-left"></i>
+
+</div>
     {% block content %}{% endblock %}
 
     </body>

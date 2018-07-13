@@ -1,5 +1,10 @@
+#lists {
+	text-align:center;
+}
+
 #policies {
-	margin-top: 3%;
+	margin-top: 1%;
+	text-align:center;
 }
 
 #img_defensepro {
@@ -21,7 +26,7 @@
 
 #container_dp {
 	display: flex;
-	margin-top: 3%;
+	margin-top: 1%;
 	margin-bottom: 2%;
 }
 
@@ -39,6 +44,7 @@
 	height: 100%;
 	background-color: #008cba;
 	padding: 1%;
+	border: 1px solid rgba(0,0,0,.125);
 }
 
 .sidebar li a {
@@ -51,15 +57,34 @@
 }
 
 #hide {
-	font-size: 24px;
+	font-size: 16px !important;
 	padding: 1%;
 	background-color: #fff;
 	color: black;
 	border: 1px solid rgba(0, 0, 0, 0.125);
-}
+}	
 
 @media only screen and (max-width: 700px) {
     .sidebar {
         width: 100%;
     }
+}
+
+
+.logo {
+	padding:1%;
+}
+
+#divFixed {
+    position:fixed;
+    width:100%;
+    bottom:0;
+    margin-left:3%;
+    height: whatever 
+}
+
+form {
+	background-color: #f5f5f5;
+	padding: 1%;
+	border: 1px solid rgba(0,0,0,.125);
 }

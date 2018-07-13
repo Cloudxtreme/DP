@@ -5,8 +5,9 @@
 
 {% endblock %}
 {% block content %}
-<form method="post" action="/banlist">
 <div class="container-fluid">
+<form method="post" action="/banlist" onsubmit="return confirm('Estás seguro?');">
+
 	<div class="row">
 		<div class="col-md-12">
 		    <div id="container_dp">
@@ -35,12 +36,13 @@
                             <textarea class="form-control" id="exampleTextarea" rows="3" name="whiteIPs" placeholder="10.0.0.1,10.0.0.2,..."></textarea>
                         </div>
                 </div>
-		<button type="submit" class="btn btn-primary">Submit</button>
+		<button type="submit" class="btn btn-primary" id="submit" align="center">Submit</button>
 		</div>
 		</div>
 	</div>
-</div>
 </form>
+</div>
+
 {% endblock %}
 {% block footer %}
 
@@ -48,6 +50,7 @@
 
 $(function() { 
     $('#lists').hide();
+    $('#information').hide();
     $('option#device').bind('click', function() {
         $('#lists').show();
     });
