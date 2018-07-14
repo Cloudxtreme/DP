@@ -1,5 +1,7 @@
 # DP
-A simple admin dashboard to manage a DefensePro.
+A simple admin panel to manage a DefensePro.
+
+<div style="text-align:center"><img src ="https://raw.githubusercontent.com/alexfrancow/DP/master/PoC/dp.jpg" /></div>
 
 ## Configure
 Change the Vision IP Address, user and password on ```app/views.py```:
