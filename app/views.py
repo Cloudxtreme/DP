@@ -240,10 +240,6 @@ def select_DP():
 ################
 
 @login_blueprint.route('/', methods=['GET', 'POST'])
-def main():
-    return render_template('banlist.html')
-
-
 @banlist_blueprint.route('/banlist', methods=['GET', 'POST'])
 def banlist():
     s = login()
