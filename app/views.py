@@ -109,6 +109,25 @@ def get_DPList(s):
                 DPIP.append(v)
     return DPName, DPIP
 
+# https://stackoverflow.com/questions/40313509/optional-list-argument-list-list-or-in-python
+def delete_BIPs(s, device, banIPs):
+    for banIP in banIPs:
+        url = 'https://'+VisionIP+'/mgmt/device/byip/'+device+'/config/rsNewBlackListTable/'+banIP
+        r = s.delete(url, verify=False)
+        print(url)
+        j = r.json()
+        print(r.json())
+
+
+def delete_WIPs(s, device, whiteIPs):
+    for whiteIP in whiteIPs:
+        url = 'https://'+VisionIP+'/mgmt/device/byip/'+device+'/config/rsNewWhiteListTable/'+whiteIP
+        r = s.delete(url, verify=False)
+        print(url)
+        j = r.json()
+        print(r.json())
+
+
 def add_IPBlacklist(s, device, banIPs):
     for banIP in banIPs:
         url = 'https://'+VisionIP+'/mgmt/device/byip/'+device+'/config/rsNewBlackListTable/'+banIP
@@ -137,8 +156,15 @@ def add_IPBlacklist(s, device, banIPs):
 
         r = s.post(url, verify=False, json=args)
         print(url)
-        r.json()
+        j = r.json()
         print(r.json())
+        if "Exception" in j:
+            print("Erroooooooooor")
+            print(j['message'])
+            delete_BIPs(s, device, banIPs)
+            return j['message']
+
+    return "Success"
 
 def add_IPWhitelist(s, device, whiteIPs):
     for whiteIP in whiteIPs:
@@ -168,8 +194,15 @@ def add_IPWhitelist(s, device, whiteIPs):
 
         r = s.post(url, verify=False, json=args)
         print(url)
-        r.json()
+        j = r.json()
         print(r.json())
+        if "Exception" in j:
+            print("Erroooooooooor")
+            print(j['message'])
+            delete_WIPs(s, device, whiteIPs)
+            return j['message']
+
+    return "Success"
 
 def update_Policies(s, enablePolicies):
     #Report Only ~ rsIDSNewRulesAction: 0
@@ -243,6 +276,8 @@ def select_DP():
 @banlist_blueprint.route('/banlist', methods=['GET', 'POST'])
 def banlist():
     s = login()
+    BlackList = ""
+    WhiteList = ""
 
     if request.method == 'POST':
         device = request.form['device']
@@ -251,23 +286,25 @@ def banlist():
         if request.form['banIPs']:
             banIPs = request.form['banIPs']
             banIPs = banIPs.split(",")
+            #banIPs = banIPs.split("\n")
             print(banIPs)
             lock(s, device)
-            add_IPBlacklist(s, device, banIPs)
+            BlackList = add_IPBlacklist(s, device, banIPs)
             unlock(s, device)
 
         if request.form['whiteIPs']:
             whiteIPs = request.form['whiteIPs']
             whiteIPs = whiteIPs.split(",")
             lock(s, device)
-            add_IPWhitelist(s, device, whiteIPs)
+            WhiteList = add_IPWhitelist(s, device, whiteIPs)
             unlock(s, device)
+
 
     DPName, DPIP = get_DPList(s)
     # https://stackoverflow.com/questions/17139807/jinja2-multiple-variables-in-same-for-loop
     DPDevices = zip(DPName, DPIP)
 
-    return render_template('banlist.html', DPDevices=DPDevices)
+    return render_template('banlist.html', DPDevices=DPDevices, BlackList=BlackList, WhiteList=WhiteList)
 
 
 @policies_blueprint.route('/policies', methods=['GET', 'POST'])
