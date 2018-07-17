@@ -119,13 +119,12 @@ def delete_BIPs(s, device, banIPs):
         print(r.json())
 
 
-def delete_WIPs(s, device, whiteIPs):
-    for whiteIP in whiteIPs:
-        url = 'https://'+VisionIP+'/mgmt/device/byip/'+device+'/config/rsNewWhiteListTable/'+whiteIP
-        r = s.delete(url, verify=False)
-        print(url)
-        j = r.json()
-        print(r.json())
+def delete_WIPs(s, device, whiteIP):
+    url = 'https://'+VisionIP+'/mgmt/device/byip/'+device+'/config/rsNewWhiteListTable/'+whiteIP
+    r = s.delete(url, verify=False)
+    print(url)
+    j = r.json()
+    print(r.json())
 
 
 def add_IPBlacklist(s, device, banIPs):
@@ -167,6 +166,8 @@ def add_IPBlacklist(s, device, banIPs):
     return "Success"
 
 def add_IPWhitelist(s, device, whiteIPs):
+    successMsg = []
+    errorMsg = []
     for whiteIP in whiteIPs:
         url = 'https://'+VisionIP+'/mgmt/device/byip/'+device+'/config/rsNewWhiteListTable/'+whiteIP
         args = {
@@ -197,12 +198,22 @@ def add_IPWhitelist(s, device, whiteIPs):
         j = r.json()
         print(r.json())
         if "Exception" in j:
+            Exception = True
             print("Erroooooooooor")
             print(j['message'])
-            delete_WIPs(s, device, whiteIPs)
-            return j['message']
+            errorMsg.append(j['message'] +" for " + whiteIP)
+            if j['message'] == "M_00386: An entry with same key already exists.":
+                print("Ya existe")
+            else:
+                delete_WIPs(s, device, whiteIP)
 
-    return "Success"
+        successMsg.append(whiteIP)
+
+    if Exception == True:
+        return errorMsg
+    else:
+        #cambiar por successmsg
+        return "Success"
 
 def update_Policies(s, enablePolicies):
     #Report Only ~ rsIDSNewRulesAction: 0

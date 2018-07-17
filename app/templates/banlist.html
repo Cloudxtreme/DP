@@ -51,7 +51,9 @@
 {% elif "M" in BlackList %}
 <div class="alert alert-dismissible alert-danger">
   <button type="button" class="close" data-dismiss="alert">&times;</button>
-  <strong>Oh snap!</strong> Error trying to add IPs in the BLACKLIST, message: {{ BlackList }} <strong>!NO ip has been added to the BLACKLIST. </strong>
+  <strong>Oh snap!</strong> Error trying to add IPs in the BLACKLIST,
+
+  <strong>Some IPs haven't been added to the BLACKLIST.</strong>
 </div>
 {% else %}
 {% endif %}
@@ -61,12 +63,18 @@
   <button type="button" class="close" data-dismiss="alert">&times;</button>
   <strong>Well done!</strong> You successfully added IPs in the WHITELIST.
 </div>
-{% elif "M" in WhiteList %}
+{% elif WhiteList == "" %}
+
+{% else %}
 <div class="alert alert-dismissible alert-danger">
   <button type="button" class="close" data-dismiss="alert">&times;</button>
-  <strong>Oh snap!</strong> Error trying to add IPs in the WHITELIST, message: {{ WhiteList }} <strong>!NO ip has been added to the WHITELIST.</strong>
+  <strong>Oh snap!</strong> Error trying to add IPs in the WHITELIST
+    {% for e in WhiteList %}
+       {{ e }}
+    {% endfor %}
+
+  <strong>Some IPs haven't been added to the WHITELIST.</strong>
 </div>
-{% else %}
 {% endif %}
 
 {% endblock %}
