@@ -32,6 +32,6 @@ $ python run.py
 
 <kbd><img src="https://raw.githubusercontent.com/alexfrancow/DP/dev/PoC/1.png" /></kbd>
 
-<kbd><img src="https://raw.githubusercontent.com/alexfrancow/DP/dev/PoC/3.png" /></kbd>
+<kbd><img src="https://raw.githubusercontent.com/alexfrancow/DP/master/PoC/3.png" /></kbd>
 
 ---
