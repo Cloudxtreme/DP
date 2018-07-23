@@ -48,15 +48,20 @@
   <button type="button" class="close" data-dismiss="alert">&times;</button>
   <strong>Well done!</strong> You successfully added IPs in the BLACKLIST.
 </div>
-{% elif "M" in BlackList %}
+{% elif BlackList == "" %}
+
+{% else %}
 <div class="alert alert-dismissible alert-danger">
   <button type="button" class="close" data-dismiss="alert">&times;</button>
   <strong>Oh snap!</strong> Error trying to add IPs in the BLACKLIST,
+    {% for e in BlackList %}
+       {{ e }}
+    {% endfor %}
 
   <strong>Some IPs haven't been added to the BLACKLIST.</strong>
 </div>
-{% else %}
 {% endif %}
+
 
 {% if "Success" in WhiteList %}
 <div class="alert alert-dismissible alert-success">

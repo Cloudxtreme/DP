@@ -1,3 +1,7 @@
+.alert {
+	margin: 5% !important;
+}
+
 #lists {
 	text-align:center;
 }

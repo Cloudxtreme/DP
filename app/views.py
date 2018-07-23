@@ -57,11 +57,13 @@ def login():
     return s
 
 def lock(s, device):
+    #Lock DefensePro device
     url = 'https://'+VisionIP+'/mgmt/system/config/tree/device/byip/'+device+'/lock'
     r = s.post(url, verify=False)
     r.json()
 
 def unlock(s, device):
+    #Unlock DefensePro device
     url = 'https://'+VisionIP+'/mgmt/system/config/tree/device/byip/'+device+'/unlock'
     r = s.post(url, verify=False)
     r.json()
@@ -93,6 +95,7 @@ def get_rulesName(s, *device):
         return ''
 
 def get_DPList(s):
+    #Get all DefensePro devices
     url = 'https://'+VisionIP+'/mgmt/system/config/itemlist/alldevices'
 
     r = s.get(url, verify=False)
@@ -109,8 +112,8 @@ def get_DPList(s):
                 DPIP.append(v)
     return DPName, DPIP
 
-# https://stackoverflow.com/questions/40313509/optional-list-argument-list-list-or-in-python
 def delete_BIPs(s, device, banIPs):
+    #Delete banIPs
     for banIP in banIPs:
         url = 'https://'+VisionIP+'/mgmt/device/byip/'+device+'/config/rsNewBlackListTable/'+banIP
         r = s.delete(url, verify=False)
@@ -120,6 +123,7 @@ def delete_BIPs(s, device, banIPs):
 
 
 def delete_WIPs(s, device, whiteIP):
+    #Delete whiteIPs
     url = 'https://'+VisionIP+'/mgmt/device/byip/'+device+'/config/rsNewWhiteListTable/'+whiteIP
     r = s.delete(url, verify=False)
     print(url)
@@ -128,6 +132,10 @@ def delete_WIPs(s, device, whiteIP):
 
 
 def add_IPBlacklist(s, device, banIPs):
+    #Add IPs to blacklist
+    successMsg = []
+    errorMsg = []
+    Exception = False
     for banIP in banIPs:
         url = 'https://'+VisionIP+'/mgmt/device/byip/'+device+'/config/rsNewBlackListTable/'+banIP
         args = {
@@ -158,17 +166,29 @@ def add_IPBlacklist(s, device, banIPs):
         j = r.json()
         print(r.json())
         if "Exception" in j:
+            Exception = True
             print("Erroooooooooor")
             print(j['message'])
-            delete_BIPs(s, device, banIPs)
-            return j['message']
+            errorMsg.append(j['message'] +" for " + banIP)
+            if j['message'] == "M_00386: An entry with same key already exists.":
+                print("Ya existe")
+            else:
+                delete_BIPs(s, device, banIP)
 
-    return "Success"
+        successMsg.append(banIP)
+
+    if Exception == True:
+        return errorMsg
+    else:
+        #cambiar por successmsg
+        return "Success"
 
 def add_IPWhitelist(s, device, whiteIPs):
+    #Add IPs to whitelist
     successMsg = []
     errorMsg = []
     for whiteIP in whiteIPs:
+        Exception = False
         url = 'https://'+VisionIP+'/mgmt/device/byip/'+device+'/config/rsNewWhiteListTable/'+whiteIP
         args = {
             'rsNewWhiteListName': whiteIP,
@@ -212,10 +232,11 @@ def add_IPWhitelist(s, device, whiteIPs):
     if Exception == True:
         return errorMsg
     else:
-        #cambiar por successmsg
         return "Success"
 
 def update_Policies(s, enablePolicies):
+    #Modify rule action
+
     #Report Only ~ rsIDSNewRulesAction: 0
     #Block and Report ~ rsIDSNewRulesAction: 1
     for rule, enable in enablePolicies:
@@ -292,13 +313,10 @@ def banlist():
 
     if request.method == 'POST':
         device = request.form['device']
-        print(device)
 
         if request.form['banIPs']:
             banIPs = request.form['banIPs']
             banIPs = banIPs.split(",")
-            #banIPs = banIPs.split("\n")
-            print(banIPs)
             lock(s, device)
             BlackList = add_IPBlacklist(s, device, banIPs)
             unlock(s, device)
@@ -312,25 +330,21 @@ def banlist():
 
 
     DPName, DPIP = get_DPList(s)
-    # https://stackoverflow.com/questions/17139807/jinja2-multiple-variables-in-same-for-loop
     DPDevices = zip(DPName, DPIP)
-
     return render_template('banlist.html', DPDevices=DPDevices, BlackList=BlackList, WhiteList=WhiteList)
 
 
 @policies_blueprint.route('/policies', methods=['GET', 'POST'])
 def policies(*RulesName, **RulesAction):
     s = login()
-    # Get all devices list (name + ip)
     DPName, DPIP = get_DPList(s)
     DPDevices = zip(DPName, DPIP)
 
     if request.method == 'POST':
         device = request.form['device']
-        print(device)
         RulesName = get_rulesName(s, device)
+
         enables = request.form.getlist('enables[]')
-        print(enables)
         enablePolicies = zip(RulesName, enables)
         lock(s, device)
         time.sleep(1)
