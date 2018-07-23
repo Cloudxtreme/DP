@@ -1,5 +1,5 @@
 .alert {
-	margin: 5% !important;
+	margin: 1% 5% 0 5% !important;
 }
 
 #lists {
@@ -13,11 +13,17 @@
 
 #img_defensepro {
 	float: left;
-	padding: 0.5%;
+	padding: 0.2%;
 }
 
 #select_defensepro {
 	float: left;
+	margin-left: -1%;
+}
+
+#dpSelect {
+	width: 20%;
+	margin-left: 1%;
 }
 
 #jsontotable {
@@ -72,6 +78,13 @@
     .sidebar {
         width: 100%;
     }
+    #divFixed {
+        position: relative !important;
+        margin-left: 0 !important;
+    }
+    #hide {
+        display: none;
+    }
 }
 
 
@@ -84,7 +97,12 @@
     width:100%;
     bottom:0;
     margin-left:3%;
-    height: whatever 
+    height: whatever;
+    z-index: 1;
+}
+
+#divFixed #hide {
+    line-height: 70px;
 }
 
 form {

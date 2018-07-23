@@ -24,14 +24,14 @@
 
 		<div class="col-md-12" id="lists">		
 		<div class="col-md-6" id="blacklist">
-			<h2> Add to blacklist </h2>
+			<p> <i class="fas fa-list-alt"></i> blacklist </p>
                         <div class="form-group">
                             <textarea class="form-control" id="IPs" rows="3" name="banIPs" placeholder="10.0.0.1,10.0.0.2,..."></textarea>
                         </div>
 		</div>
 
 		<div class="col-md-6" id="whitelist">
-			<h2> Add to whitelist</h2>
+			<p><i class="far fa-list-alt"></i> whitelist</p>
                         <div class="form-group">
                             <textarea class="form-control" id="IPs" rows="3" name="whiteIPs" placeholder="10.0.0.1,10.0.0.2,..."></textarea>
                         </div>
@@ -53,12 +53,11 @@
 {% else %}
 <div class="alert alert-dismissible alert-danger">
   <button type="button" class="close" data-dismiss="alert">&times;</button>
-  <strong>Oh snap!</strong> Error trying to add IPs in the BLACKLIST,
+  <strong>Oh snap!</strong><br>
     {% for e in BlackList %}
-       {{ e }}
+       {{ e }} <strong>hasn't been added to the BLACKLIST.</strong><br>
     {% endfor %}
 
-  <strong>Some IPs haven't been added to the BLACKLIST.</strong>
 </div>
 {% endif %}
 
@@ -73,12 +72,11 @@
 {% else %}
 <div class="alert alert-dismissible alert-danger">
   <button type="button" class="close" data-dismiss="alert">&times;</button>
-  <strong>Oh snap!</strong> Error trying to add IPs in the WHITELIST
+  <strong>Oh snap!</strong><br>
     {% for e in WhiteList %}
-       {{ e }}
+       {{ e }} <strong>hasn't been added to the WHITELIST.</strong> <br>
     {% endfor %}
 
-  <strong>Some IPs haven't been added to the WHITELIST.</strong>
 </div>
 {% endif %}
 

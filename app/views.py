@@ -169,7 +169,7 @@ def add_IPBlacklist(s, device, banIPs):
             Exception = True
             print("Erroooooooooor")
             print(j['message'])
-            errorMsg.append(j['message'] +" for " + banIP)
+            errorMsg.append(j['message'] + " [" + banIP + "]")
             if j['message'] == "M_00386: An entry with same key already exists.":
                 print("Ya existe")
             else:
@@ -221,7 +221,7 @@ def add_IPWhitelist(s, device, whiteIPs):
             Exception = True
             print("Erroooooooooor")
             print(j['message'])
-            errorMsg.append(j['message'] +" for " + whiteIP)
+            errorMsg.append(j['message'] + " [" + whiteIP + "]")
             if j['message'] == "M_00386: An entry with same key already exists.":
                 print("Ya existe")
             else:
