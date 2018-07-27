@@ -30,8 +30,6 @@ $ python run.py
 
 ## Screenshots
 
-<kbd><img src="https://raw.githubusercontent.com/alexfrancow/DP/dev/PoC/1.png" /></kbd>
-
 <kbd><img src="https://raw.githubusercontent.com/alexfrancow/DP/master/PoC/3.png" /></kbd>
 
 ---
