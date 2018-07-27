@@ -68,6 +68,13 @@ def unlock(s, device):
     r = s.post(url, verify=False)
     r.json()
 
+def refresh_policies(s, device):
+    url = 'https://'+VisionIP+'/mgmt/device/multi/config/updatepolicies'
+    args = {"deviceIpAddresses":[device]}
+    r = s.post(url, verify=False, json=args)
+    print("POLICIEEEES")
+    r.json()
+
 def get_rulesName(s, *device):
     #Get Policies from Device
     device = ''.join(device)
@@ -313,6 +320,7 @@ def banlist():
 
     if request.method == 'POST':
         device = request.form['device']
+        refresh_policies(s, device)
 
         if request.form['banIPs']:
             banIPs = request.form['banIPs']
@@ -327,7 +335,6 @@ def banlist():
             lock(s, device)
             WhiteList = add_IPWhitelist(s, device, whiteIPs)
             unlock(s, device)
-
 
     DPName, DPIP = get_DPList(s)
     DPDevices = zip(DPName, DPIP)
@@ -351,6 +358,7 @@ def policies(*RulesName, **RulesAction):
         update_Policies(s, enablePolicies)
         time.sleep(1)
         unlock(s, device)
+        refresh_policies(s, device)
         return redirect('/policies')
 
     return render_template('policies.html', DPDevices=DPDevices)
