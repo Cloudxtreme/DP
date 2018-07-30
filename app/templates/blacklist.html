@@ -1,0 +1,70 @@
+{% extends 'layout.html' %}
+
+{% block header %}
+{% block title %}Admin{% endblock %}
+
+{% endblock %}
+{% block content %}
+<div class="container-fluid">
+<form method="post" id="blacklist-form" action="/blacklist" onsubmit="return confirm('Estas apunto de añadir las IPs en la BLACKLIST, estás seguro?');">
+
+	<div class="row">
+		<div class="col-md-12">
+		    <div id="container_dp">
+                        <div id="img_defensepro">
+                                <img src="static/img/device_defensepro.png" alt="">
+                        </div>
+                        <select class="form-control custom-select" id="dpSelect" name="device">
+                            {% for name, ip in DPDevices %}
+                            <option value="{{ ip }}" id="device">{{ name }} ~ {{ ip }}</option>
+                            {% endfor %}
+                        </select>
+
+		   </div>
+		</div>
+
+		<div class="col-md-12" id="blacklist">
+			<span class="badge badge-info"><i class="fas fa-info-circle"></i> BLACKLIST</span>
+                        <div class="form-group">
+                            <textarea class="form-control" id="IPs" rows="3" name="banIPs" placeholder="10.0.0.1,10.0.0.2,..."></textarea>
+                        </div>
+			<button type="submit" class="btn btn-primary" id="submit" align="center">Submit</button>
+		</div>
+
+	</div>
+</form>
+</div>
+
+{% if "Success" in BlackList %}
+                <div class="alert alert-dismissible alert-success">
+                        <button type="button" class="close" data-dismiss="alert">&times;</button>
+                        <strong>Well done!</strong> You successfully added IPs in the BLACKLIST.
+                </div>
+                {% elif BlackList == "" %}
+
+                {% else %}
+                <div class="alert alert-dismissible alert-danger">
+                        <button type="button" class="close" data-dismiss="alert">&times;</button>
+                        <strong>Oh snap!</strong><br>
+                        {% for e in BlackList %}
+                                {{ e }} <strong>hasn't been added to the BLACKLIST.</strong><br>
+                        {% endfor %}
+                </div>
+{% endif %}
+
+{% endblock %}
+{% block footer %}
+
+<script type=text/javascript>
+
+$(function() { 
+    $('#blacklist').hide();
+    $('#information').hide();
+    $('option#device').bind('click', function() {
+        $('#blacklist').show();
+    });
+
+});
+</script>
+
+{% endblock%}

@@ -1,3 +1,17 @@
+#whitelist-form {
+	background-color: #fff;
+}
+
+#blacklist-form {
+	/*background-color: #222222 !important;*/
+	background-color: rgba(2, 2, 2, 0.8);
+}
+
+.list-warning {
+	margin: 0 0 0 10% !important;
+	width: 45%;
+}
+
 .alert {
 	margin: 1% 5% 0 5% !important;
 }
@@ -7,7 +21,6 @@
 }
 
 #policies {
-	margin-top: 1%;
 	text-align:center;
 }
 
@@ -102,7 +115,7 @@
 }
 
 #divFixed #hide {
-    line-height: 70px;
+    line-height: 115px;
 }
 
 form {

@@ -3,7 +3,7 @@
     <head>
 	{% block head %}
         <meta charset="utf-8"/>
-        <title>{% block title %}{% endblock %} - My Site</title>
+        <title>{% block title %}{% endblock %} - DP Dashboard</title>
         <meta charset="utf-8">
     	<meta name='viewport' content='width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no' />
 	<link rel="stylesheet" href="static/css/styles.css">
@@ -32,7 +32,10 @@
     <body>
 <!--
 <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
-  <h2>dp dashboard</h2>
+  <h2>>dp dashboard</h2>
+<ol class="breadcrumb">
+  <li class="breadcrumb-item active">DP DASHBOARD</li>
+</ol>
   <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarColor02" aria-controls="navbarColor02" aria-expanded="false" aria-label="Toggle navigation">
     <span class="navbar-toggler-icon"></span>
   </button>
@@ -43,7 +46,7 @@
         <a class="nav-link" href="#">Home <span class="sr-only">(current)</span></a>
       </li>
       <li class="nav-item">
-        <a class="nav-link" href="/banlist">Black/White Lists</a>
+        <a class="nav-link" href="/blacklist">Black/White Lists</a>
       </li>
       <li class="nav-item">
         <a class="nav-link" href="/policies">Policies</a>
@@ -54,14 +57,21 @@
 -->
 
 <div class="logo">
-            <h2>DP Dashboard</h2>
+	<ol class="breadcrumb">
+		<li class="breadcrumb-item active"><i class="fas fa-server"></i> defense-pro dashboard</li>
+	</ol>
 </div>
 
 <div id="divFixed" class="input-group mb-3">
 <ul class="nav nav-pills flex-column sidebar">
   <li class="nav-item">
-    <a class="nav-link" href="/banlist"><i class="fas fa-ban"></i> Black/White List</a>
+    <a class="nav-link" href="/blacklist"><i class="fas fa-ban"></i> BlackList</a>
   </li>
+
+  <li class="nav-item">
+    <a class="nav-link" href="/whitelist"><i class="fas fa-check"></i> WhiteList</a>
+  </li>
+
   <li class="nav-item">
     <a class="nav-link" href="/policies"><i class="fas fa-clipboard-list"></i> Policies</a>
   </li>

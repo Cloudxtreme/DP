@@ -9,18 +9,33 @@
 	<form method="post" action="/policies" onsubmit="return confirm('Estás seguro?');">
 	<div class="row">
 	<div class="col-md-12" id="policies">
+
+				    <div id="container_dp">
+                        <div id="img_defensepro">
+                                <img src="static/img/device_defensepro.png" alt="">
+                        </div>
+                            <select class="form-control custom-select" id="dpSelect" name="device">
+			    {% for name, ip in DPDevices %}                            
+                            <option value="{{ ip }}" id="device" name="device">{{ name }} ~ {{ ip }}</option>
+                            {% endfor %}
+                            </select>
+                    </div>
+
+<!--
 			    <div id="img_defensepro">
 			    	<img src="static/img/device_defensepro.png" alt="">
 			    </div> 
 			    <div class="col-lg-10" id="select_defensepro">
-      			    	<select class="form-control" id="dpSelect" name="device">
+      			    	<select class="form-control custom-select" id="dpSelect" name="device">
 		            	{% for name, ip in DPDevices %}
                             	<option id="device" value="{{ ip }}" name="device">{{ name }} ~ {{ ip }}</option>
 			    	{% endfor %}
 		            	</select>
 			    </div>
-
-			    <div id="jsontotable" class="jsontotable">
+-->
+			    <div class="col-md-12" id="policiesdiv">
+			        <div id="jsontotable" class="jsontotable"></div>
+			        <button type="submit" class="btn btn-primary" id="submit_policies">Submit</button>
 			    </div>
 
 				<!--
@@ -48,7 +63,8 @@
 				</tbody>
 				</table>
 				-->
-			<button type="submit" class="btn btn-primary" id="submit_policies">Submit</button>
+
+
 		</div>
 	</div>
 	</form>
@@ -64,6 +80,7 @@
 
 <script type=text/javascript>
   $(function() {
+    $('#policiesdiv').hide();
     $('option#device').bind('click', function() {
       $.getJSON($SCRIPT_ROOT + '/_select_DP', {
         a: $('option[name="device"]').val(),
@@ -85,6 +102,7 @@
 	
 // $('#jsontotable > table > tbody > tr > td:nth-child(2)').append('<select name="enables[]"> <option value="0" selected="selected"> Report Only</option> <option value="1"> Block and Report</option></select>');
 
+	$('#policiesdiv').show();
 
       });
       return false;

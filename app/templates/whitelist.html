@@ -6,7 +6,7 @@
 {% endblock %}
 {% block content %}
 <div class="container-fluid">
-<form method="post" action="/banlist" onsubmit="return confirm('Estás seguro?');">
+<form method="post" id="whitelist-form" action="/whitelist" onsubmit="return confirm('Estas apunto de añadir las IPs en la WHITELIST, estás seguro?');">
 
 	<div class="row">
 		<div class="col-md-12">
@@ -14,7 +14,7 @@
                         <div id="img_defensepro">
                                 <img src="static/img/device_defensepro.png" alt="">
                         </div>
-                            <select class="form-control" id="dpSelect" name="device">
+                            <select class="form-control custom-select" id="dpSelect" name="device">
                             {% for name, ip in DPDevices %}
                             <option value="{{ ip }}" id="device">{{ name }} ~ {{ ip }}</option>
                             {% endfor %}
@@ -22,44 +22,16 @@
                     </div>
 		</div>
 
-		<div class="col-md-12" id="lists">		
-		<div class="col-md-6" id="blacklist">
-			<p> <i class="fas fa-list-alt"></i> blacklist </p>
-                        <div class="form-group">
-                            <textarea class="form-control" id="IPs" rows="3" name="banIPs" placeholder="10.0.0.1,10.0.0.2,..."></textarea>
-                        </div>
-		</div>
-
-		<div class="col-md-6" id="whitelist">
-			<p><i class="far fa-list-alt"></i> whitelist</p>
+		<div class="col-md-12" id="whitelist">
+			<span class="badge badge-info"><i class="fas fa-info-circle"></i> WHITELIST</span>
                         <div class="form-group">
                             <textarea class="form-control" id="IPs" rows="3" name="whiteIPs" placeholder="10.0.0.1,10.0.0.2,..."></textarea>
                         </div>
+			<button type="submit" class="btn btn-primary" id="submit" align="center">Submit</button>
                 </div>
-		<button type="submit" class="btn btn-primary" id="submit" align="center">Submit</button>
-		</div>
-		</div>
 	</div>
 </form>
 </div>
-
-{% if "Success" in BlackList %}
-<div class="alert alert-dismissible alert-success">
-  <button type="button" class="close" data-dismiss="alert">&times;</button>
-  <strong>Well done!</strong> You successfully added IPs in the BLACKLIST.
-</div>
-{% elif BlackList == "" %}
-
-{% else %}
-<div class="alert alert-dismissible alert-danger">
-  <button type="button" class="close" data-dismiss="alert">&times;</button>
-  <strong>Oh snap!</strong><br>
-    {% for e in BlackList %}
-       {{ e }} <strong>hasn't been added to the BLACKLIST.</strong><br>
-    {% endfor %}
-
-</div>
-{% endif %}
 
 
 {% if "Success" in WhiteList %}
@@ -86,10 +58,10 @@
 <script type=text/javascript>
 
 $(function() { 
-    $('#lists').hide();
+    $('#whitelist').hide();
     $('#information').hide();
     $('option#device').bind('click', function() {
-        $('#lists').show();
+        $('#whitelist').show();
     });
 
 });

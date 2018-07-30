@@ -24,7 +24,8 @@ from requests import Request, Session
 ####################
 
 login_blueprint = Blueprint('login', __name__, template_folder='templates')
-banlist_blueprint = Blueprint('banlist', __name__, template_folder='templates')
+blacklist_blueprint = Blueprint('blacklist', __name__, template_folder='templates')
+whitelist_blueprint = Blueprint('whitelist', __name__, template_folder='templates')
 policies_blueprint = Blueprint('policies', __name__, template_folder='templates')
 ajax_blueprint = Blueprint('ajax', __name__, template_folder='templates')
 
@@ -312,11 +313,10 @@ def select_DP():
 ################
 
 @login_blueprint.route('/', methods=['GET', 'POST'])
-@banlist_blueprint.route('/banlist', methods=['GET', 'POST'])
+@blacklist_blueprint.route('/blacklist', methods=['GET', 'POST'])
 def banlist():
     s = login()
     BlackList = ""
-    WhiteList = ""
 
     if request.method == 'POST':
         device = request.form['device']
@@ -329,6 +329,19 @@ def banlist():
             BlackList = add_IPBlacklist(s, device, banIPs)
             unlock(s, device)
 
+    DPName, DPIP = get_DPList(s)
+    DPDevices = zip(DPName, DPIP)
+    return render_template('blacklist.html', DPDevices=DPDevices, BlackList=BlackList)
+
+@whitelist_blueprint.route('/whitelist', methods=['GET', 'POST'])
+def banlist():
+    s = login()
+    WhiteList = ""
+
+    if request.method == 'POST':
+        device = request.form['device']
+        refresh_policies(s, device)
+        
         if request.form['whiteIPs']:
             whiteIPs = request.form['whiteIPs']
             whiteIPs = whiteIPs.split(",")
@@ -338,8 +351,7 @@ def banlist():
 
     DPName, DPIP = get_DPList(s)
     DPDevices = zip(DPName, DPIP)
-    return render_template('banlist.html', DPDevices=DPDevices, BlackList=BlackList, WhiteList=WhiteList)
-
+    return render_template('whitelist.html', DPDevices=DPDevices, WhiteList=WhiteList)
 
 @policies_blueprint.route('/policies', methods=['GET', 'POST'])
 def policies(*RulesName, **RulesAction):
