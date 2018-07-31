@@ -30,9 +30,15 @@ $ python run.py
 
 ## Screenshots
 
+### Add multiple IPs to Black List
+
 <kbd><img src="https://raw.githubusercontent.com/alexfrancow/DP/master/PoC/8.png" /></kbd>
 
+### Add multiple IPs to White List
+
 <kbd><img src="https://raw.githubusercontent.com/alexfrancow/DP/master/PoC/9.png" /></kbd>
+
+### Modify network protection policies
 
 <kbd><img src="https://raw.githubusercontent.com/alexfrancow/DP/master/PoC/7.png" /></kbd>
 ---
