@@ -1,3 +1,7 @@
+#container-policies{
+	padding-bottom: 10%;
+}
+
 #whitelist-form {
 	background-color: #fff;
 }
@@ -107,15 +111,21 @@
 
 #divFixed {
     position:fixed;
-    width:100%;
+    width:250px;
     bottom:0;
     margin-left:3%;
     height: whatever;
     z-index: 1;
+
 }
 
 #divFixed #hide {
-    line-height: 115px;
+        line-height: 115px;
+	width: 10%;
+}
+
+.sidebar {
+	width: 90%;
 }
 
 form {
@@ -123,3 +133,4 @@ form {
 	padding: 1%;
 	border: 1px solid rgba(0,0,0,.125);
 }
+

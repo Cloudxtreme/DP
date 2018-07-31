@@ -5,7 +5,7 @@
 <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.3.1/jquery.js"></script>
 {% endblock %}
 {% block content %}
-<div class="container-fluid">
+<div class="container-fluid" id="container-policies">
 	<form method="post" action="/policies" onsubmit="return confirm('Estás seguro?');">
 	<div class="row">
 	<div class="col-md-12" id="policies">
@@ -97,9 +97,9 @@
 	// JSON to table
 	$.jsontotable(data, { id: '#jsontotable', header: false, className: 'table table-hover policies-table' });
 
-	$( "td:nth-child(2):contains('0')" ).empty().append('<select name="enables[]"> <option value="0" selected="selected"> Report Only </option> <option value="1"> Block and Report</option></select>');
+	$( "td:nth-child(2):contains('0')" ).empty().append('<select name="enables[]" class="form-control custom-select"> <option value="0" selected="selected"> Report Only </option> <option value="1"> Block and Report</option></select>');
 
-	$( "td:nth-child(2):contains('1')" ).empty().append('<select name="enables[]"> <option value="0"> Report Only </option> <option value="1" selected="selected"> Block and Report</option></select>');
+	$( "td:nth-child(2):contains('1')" ).empty().append('<select name="enables[]" class="form-control custom-select"> <option value="0"> Report Only </option> <option value="1" selected="selected"> Block and Report</option></select>');
 	
 // $('#jsontotable > table > tbody > tr > td:nth-child(2)').append('<select name="enables[]"> <option value="0" selected="selected"> Report Only</option> <option value="1"> Block and Report</option></select>');
 
