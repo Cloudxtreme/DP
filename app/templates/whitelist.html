@@ -34,22 +34,32 @@
 </div>
 
 
-{% if "Success" in WhiteList %}
+{% if success[0] %}
 <div class="alert alert-dismissible alert-success">
   <button type="button" class="close" data-dismiss="alert">&times;</button>
-  <strong>Well done!</strong> You successfully added IPs in the WHITELIST.
+  <strong>Well done!</strong><br>
+  {% for ips in success %}
+    {% for ip in ips %}
+       {{ ip }} successfully added in the WHITELIST. <br>
+    {% endfor %}
+  {% endfor %}
 </div>
-{% elif WhiteList == "" %}
 
-{% else %}
+{% endif %}
+
+
+{% if error[0] %}
 <div class="alert alert-dismissible alert-danger">
   <button type="button" class="close" data-dismiss="alert">&times;</button>
   <strong>Oh snap!</strong><br>
-    {% for e in WhiteList %}
-       {{ e }} <strong>hasn't been added to the WHITELIST.</strong> <br>
+    {% for er in error %}
+       {% for e in er %}
+           {{ e }} <strong>hasn't been added to the WHITELIST.</strong> <br>
+       {% endfor %}
     {% endfor %}
-
 </div>
+{% else %}
+
 {% endif %}
 
 {% endblock %}

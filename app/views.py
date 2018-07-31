@@ -184,21 +184,17 @@ def add_IPBlacklist(s, device, banIPs):
                 print("Ya existe")
             else:
                 delete_BIPs(s, device, banIP)
+        else:
+            successMsg.append(banIP)
 
-        successMsg.append(banIP)
-
-    if Exception == True:
-        return errorMsg
-    else:
-        #cambiar por successmsg
-        return "Success"
+    return [errorMsg], [successMsg]
 
 def add_IPWhitelist(s, device, whiteIPs):
     #Add IPs to whitelist
     successMsg = []
     errorMsg = []
+    Exception = False
     for whiteIP in whiteIPs:
-        Exception = False
         url = 'https://'+VisionIP+'/mgmt/device/byip/'+device+'/config/rsNewWhiteListTable/'+whiteIP
         args = {
             'rsNewWhiteListName': whiteIP,
@@ -239,12 +235,10 @@ def add_IPWhitelist(s, device, whiteIPs):
             else:
                 delete_WIPs(s, device, whiteIP)
 
-        successMsg.append(whiteIP)
+        else:
+            successMsg.append(whiteIP)
 
-    if Exception == True:
-        return errorMsg
-    else:
-        return "Success"
+    return [errorMsg], [successMsg]
 
 def update_Policies(s, enablePolicies):
     #Modify rule action
@@ -320,7 +314,8 @@ def select_DP():
 @blacklist_blueprint.route('/blacklist', methods=['GET', 'POST'])
 def banlist():
     s = login()
-    BlackList = ""
+    error = ""
+    success = ""
 
     if request.method == 'POST':
         device = request.form['device']
@@ -330,18 +325,19 @@ def banlist():
         if request.form['banIPs']:
             banIPs = request.form['banIPs']
             banIPs = banIPs.split(",")
-            BlackList = add_IPBlacklist(s, device, banIPs)
+            error, success = add_IPBlacklist(s, device, banIPs)
 
         refresh_policies(s, device)
         unlock(s, device)
     DPName, DPIP = get_DPList(s)
     DPDevices = zip(DPName, DPIP)
-    return render_template('blacklist.html', DPDevices=DPDevices, BlackList=BlackList)
+    return render_template('blacklist.html', DPDevices=DPDevices, error=error, success=success)
 
 @whitelist_blueprint.route('/whitelist', methods=['GET', 'POST'])
 def whitelist():
     s = login()
-    WhiteList = ""
+    error = ""
+    success = ""
 
     if request.method == 'POST':
         device = request.form['device']
@@ -351,13 +347,13 @@ def whitelist():
         if request.form['whiteIPs']:
             whiteIPs = request.form['whiteIPs']
             whiteIPs = whiteIPs.split(",")
-            WhiteList = add_IPWhitelist(s, device, whiteIPs)
+            error, success = add_IPWhitelist(s, device, whiteIPs)
 
         refresh_policies(s, device)
         unlock(s, device)
     DPName, DPIP = get_DPList(s)
     DPDevices = zip(DPName, DPIP)
-    return render_template('whitelist.html', DPDevices=DPDevices, WhiteList=WhiteList)
+    return render_template('whitelist.html', DPDevices=DPDevices, error=error, success=success)
 
 @policies_blueprint.route('/policies', methods=['GET', 'POST'])
 def policies(*RulesName, **RulesAction):
