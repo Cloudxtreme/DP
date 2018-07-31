@@ -34,5 +34,5 @@ $ python run.py
 
 <kbd><img src="https://raw.githubusercontent.com/alexfrancow/DP/master/PoC/5.png" /></kbd>
 
-<kbd><img src="https://raw.githubusercontent.com/alexfrancow/DP/master/PoC/6.png" /></kbd>
+<kbd><img src="https://raw.githubusercontent.com/alexfrancow/DP/master/PoC/7.png" /></kbd>
 ---
