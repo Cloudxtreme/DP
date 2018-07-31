@@ -180,6 +180,8 @@ def add_IPBlacklist(s, device, banIPs):
             errorMsg.append(j['message'] + " [" + banIP + "]")
             if j['message'] == "M_00386: An entry with same key already exists.":
                 print("Ya existe")
+            elif j['message'] == "M_00386: Entry already exists in White list.":
+                print("Ya existe")
             else:
                 delete_BIPs(s, device, banIP)
 
@@ -231,6 +233,8 @@ def add_IPWhitelist(s, device, whiteIPs):
             print(j['message'])
             errorMsg.append(j['message'] + " [" + whiteIP + "]")
             if j['message'] == "M_00386: An entry with same key already exists.":
+                print("Ya existe")
+            elif j['message'] == "M_00386: Entry already exists in Black list.":
                 print("Ya existe")
             else:
                 delete_WIPs(s, device, whiteIP)
@@ -320,35 +324,37 @@ def banlist():
 
     if request.method == 'POST':
         device = request.form['device']
-        refresh_policies(s, device)
+#        refresh_policies(s, device)
+        lock(s, device)
 
         if request.form['banIPs']:
             banIPs = request.form['banIPs']
             banIPs = banIPs.split(",")
-            lock(s, device)
             BlackList = add_IPBlacklist(s, device, banIPs)
-            unlock(s, device)
 
+        refresh_policies(s, device)
+        unlock(s, device)
     DPName, DPIP = get_DPList(s)
     DPDevices = zip(DPName, DPIP)
     return render_template('blacklist.html', DPDevices=DPDevices, BlackList=BlackList)
 
 @whitelist_blueprint.route('/whitelist', methods=['GET', 'POST'])
-def banlist():
+def whitelist():
     s = login()
     WhiteList = ""
 
     if request.method == 'POST':
         device = request.form['device']
-        refresh_policies(s, device)
-        
+#        refresh_policies(s, device)
+        lock(s, device)
+
         if request.form['whiteIPs']:
             whiteIPs = request.form['whiteIPs']
             whiteIPs = whiteIPs.split(",")
-            lock(s, device)
             WhiteList = add_IPWhitelist(s, device, whiteIPs)
-            unlock(s, device)
 
+        refresh_policies(s, device)
+        unlock(s, device)
     DPName, DPIP = get_DPList(s)
     DPDevices = zip(DPName, DPIP)
     return render_template('whitelist.html', DPDevices=DPDevices, WhiteList=WhiteList)
