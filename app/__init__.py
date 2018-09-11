@@ -7,9 +7,9 @@ Autor: alexfrancow
 #### imports ####
 #################
 
-from flask import Flask
+from flask import Flask, render_template
 from flask_simplelogin import SimpleLogin
-import requests
+import requests, os
 
 ################
 #### config ####
@@ -21,7 +21,7 @@ def visionLogin(user):
     """:param user: dict {'username': 'foo', 'password': 'bar'}"""
     username = user.get('username')
     password = user.get('password')
-    VisionIP = "192.168.0.76"
+    VisionIP = '192.168.0.76'
 
     s = requests.Session()
     loginurl = 'https://'+VisionIP+'/mgmt/system/user/login'
@@ -30,7 +30,6 @@ def visionLogin(user):
     response = r.json()
     print(response)
     if 'Exception' in response:
-    #if user.get('username') == 'chuck' and user.get('password') == 'norris':
        return False
     return True
 
@@ -48,3 +47,9 @@ app.register_blueprint(blacklist_blueprint)
 app.register_blueprint(policies_blueprint)
 app.register_blueprint(ajax_blueprint)
 app.register_blueprint(whitelist_blueprint)
+
+# ROUTES
+@app.route('/', methods=['GET', 'POST'])
+def home():
+    """Render homepage"""
+    return render_template('home.html')
