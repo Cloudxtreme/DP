@@ -19,11 +19,12 @@ import pprint
 import requests
 from requests import Request, Session
 
+from flask_simplelogin import login_required
+
 ####################
 #### blueprints ####
 ####################
 
-login_blueprint = Blueprint('login', __name__, template_folder='templates')
 blacklist_blueprint = Blueprint('blacklist', __name__, template_folder='templates')
 whitelist_blueprint = Blueprint('whitelist', __name__, template_folder='templates')
 policies_blueprint = Blueprint('policies', __name__, template_folder='templates')
@@ -39,7 +40,7 @@ global VisionUser
 global VisionPasswd
 VisionIP = "192.168.0.76"
 VisionUser = "radware"
-VisionPasswd = "abc1234."
+VisionPasswd = "abc1234..."
 
 ###################
 #### functions ####
@@ -310,8 +311,8 @@ def select_DP():
 #### routes ####
 ################
 
-@login_blueprint.route('/', methods=['GET', 'POST'])
 @blacklist_blueprint.route('/blacklist', methods=['GET', 'POST'])
+@login_required
 def banlist():
     s = login()
     error = ""
@@ -334,6 +335,7 @@ def banlist():
     return render_template('blacklist.html', DPDevices=DPDevices, error=error, success=success)
 
 @whitelist_blueprint.route('/whitelist', methods=['GET', 'POST'])
+@login_required
 def whitelist():
     s = login()
     error = ""
@@ -356,6 +358,7 @@ def whitelist():
     return render_template('whitelist.html', DPDevices=DPDevices, error=error, success=success)
 
 @policies_blueprint.route('/policies', methods=['GET', 'POST'])
+@login_required
 def policies(*RulesName, **RulesAction):
     s = login()
     DPName, DPIP = get_DPList(s)

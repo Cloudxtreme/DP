@@ -1,0 +1,401 @@
+Metadata-Version: 1.2
+Name: flask_simplelogin
+Version: 0.0.6
+Summary: Flask Simple Login - Login Extension for Flask
+Home-page: https://github.com/rochacbruno/flask_simplelogin
+License: UNKNOWN
+Author: Bruno Rocha
+Author-email: rochacbruno@gmail.com
+Maintainer: rochacbruno
+Maintainer-email: rochacbruno@gmail.com
+Classifier: Programming Language :: Python
+Classifier: Programming Language :: Python :: 2.7
+Classifier: Programming Language :: Python :: 3.6
+Classifier: Intended Audience :: Developers
+Classifier: License :: OSI Approved :: MIT License
+Classifier: Framework :: Flask
+Classifier: Topic :: Internet :: WWW/HTTP :: Dynamic Content
+Classifier: Topic :: Software Development :: Libraries :: Python Modules
+Requires-Dist: flask_wtf
+Requires-Dist: Flask (>=0.12)
+Requires-Dist: click
+
+|Travis| |PyPI| |PyPI versions| |PyPI formats| |Flask|
+
+Login Extension for Flask
+=========================
+
+There are other good and recommended options to deal with web
+authentication & authorization in Flask.
+
+**I recommend you to use:**
+
+-  `Flask-Login <https://flask-login.readthedocs.io>`__
+-  `Flask-User <https://github.com/lingthio/Flask-User>`__
+-  `Flask-Security <https://pythonhosted.org/Flask-Security/>`__
+-  `Flask-Principal <https://pythonhosted.org/Flask-Principal/>`__
+
+Those extensions are really complete and **production ready**!
+
+So why **Flask Simple Login**?
+------------------------------
+
+However sometimes you need something **simple** for that small project
+or for prototyping.
+
+Flask Simple Login
+------------------
+
+What it provides:
+
+-  Login and Logout forms and pages
+-  Function to check if user is logged-in
+-  Decorator for views
+-  Easy and customizable ``login_checker``
+-  Basic-Auth for API endpoints
+
+What it does not provide:
+
+-  [STRIKEOUT:Database Integration]
+-  [STRIKEOUT:Password management]
+-  [STRIKEOUT:API authentication with Token or JWT]
+-  [STRIKEOUT:Role or user based access control]
+
+    of course you can easily implement all above by your own. Take a
+    look at `example </example>`__.
+
+Hot it works
+------------
+
+First install it from
+`PyPI <https://pypi.org/project/flask_simplelogin/>`__.
+
+    ``pip install flask_simplelogin``
+
+.. code:: python
+
+    from flask import Flask
+    from flask_simplelogin import SimpleLogin
+
+    app = Flask(__name__)
+    SimpleLogin(app)
+
+**That's it!**
+--------------
+
+Now you have ``/login`` and ``/logout`` routes in your application.
+
+The username defaults to ``admin`` and the password defaults to
+``secret`` (yeah that's not clever, let's see how to change it)
+
+.. figure:: /login_screen.png
+   :alt: Login Screen
+
+   Login Screen
+
+Configuring
+-----------
+
+Simple way
+
+.. code:: python
+
+    from flask import Flask
+    from flask_simplelogin import SimpleLogin
+
+    app = Flask(__name__)
+    app.config['SECRET_KEY'] = 'something-secret'
+    app.config['SIMPLELOGIN_USERNAME'] = 'chuck'
+    app.config['SIMPLELOGIN_PASSWORD'] = 'norris'
+
+    SimpleLogin(app)
+
+That works, but is not so clever, lets use env vars.
+
+.. code:: bash
+
+    $ export SIMPLELOGIN_USERNAME=chuck
+    $ export SIMPLELOGIN_PASSWORD=norris
+
+then ``SimpleLogin`` will read those env vars automatically.
+
+.. code:: python
+
+    from flask import Flask
+    from flask_simplelogin import SimpleLogin
+
+    app = Flask(__name__)
+    app.config['SECRET_KEY'] = 'something-secret'
+    SimpleLogin(app)
+
+But what if you have more users and more complex auth logic? **write a
+custom login checker**
+
+Using a custom login checker
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+.. code:: python
+
+    from flask import Flask
+    from flask_simplelogin import SimpleLogin
+
+    app = Flask(__name__)
+    app.config['SECRET_KEY'] = 'something-secret'
+
+
+    def only_chuck_norris_can_login(user):
+        """:param user: dict {'username': 'foo', 'password': 'bar'}"""
+        if user.get('username') == 'chuck' and user.get('password') == 'norris':
+           return True  # <--- Allowed
+        return False  # <--- Denied
+
+
+    SimpleLogin(app, login_checker=only_chuck_norris_can_login)
+
+Encrypt passwords
+~~~~~~~~~~~~~~~~~
+
+You can use the
+``from werkzeug.security import check_password_hash, generate_password_hash``
+utilities to encrypt passwords.
+
+A working example is available in ``manage.py`` of `example
+app <https://github.com/rochacbruno/flask_simplelogin/blob/master/example/>`__
+
+Checking if user is logged in
+-----------------------------
+
+.. code:: python
+
+
+    from flask_simplelogin import is_logged_in
+
+    if is_logged_in():
+        # do things if anyone is logged in
+
+    if is_logged_in('admin'):
+        # do things only if admin is logged in
+
+Protecting your views
+---------------------
+
+.. code:: python
+
+    from flask_simplelogin import login_required
+
+    @app.route('/it_is_protected')
+    @login_required  # < --- simple decorator
+    def foo():
+        return 'secret'
+
+    @app.route('/only_mary_can_access')
+    @login_required(username='mary')  # < --- accepts a list of names
+    def bar():
+        return "Mary's secret"
+
+    @app.route('/api', methods=['POST'])
+    @login_required(basic=True)  # < --- Basic HTTP Auth for API
+    def api():
+        # curl -XPOST localhost:5000/api -H "Authorization: Basic Y2h1Y2s6bm9ycmlz" -H "Content-Type: application/json"
+        # Basic-Auth takes base64 encripted username:password
+        return jsonify(data='You are logged in with basic auth')
+
+    class ProtectedView(MethodView):  # < --- Class Based Views
+        decorators = [login_required]
+        def get(self):
+            return "only loged in users can see this"
+
+Protecting Flask Admin views
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+.. code:: python
+
+
+    from flask_admin.contrib.foo import ModelView
+    from flask_simplelogin import is_logged_in
+
+
+    class AdminView(ModelView)
+        def is_accessible(self):
+            return is_logged_in('admin')
+
+Customizing templates
+---------------------
+
+There are only one template to customize and it is called ``login.html``
+
+Example is:
+
+.. code:: html
+
+    {% extends 'base.html' %}
+    {% block title %}Login{% endblock %}
+    {% block messages %}
+       {{super()}}
+       {%if form.errors %}
+         <ul class="alert alert-danger">
+           {% for field, errors in form.errors.items() %}
+             <li>{{field}} {% for error in errors %}{{ error }}{% endfor %}</li>
+           {% endfor %}
+         </ul>
+       {% endif %}
+    {% endblock %}
+
+    {% block page_body %}
+           <form action="{{ url_for('simplelogin.login', next=request.args.get('next', '/')) }}" method="post">
+                <div class="form-group">
+                {{ form.csrf_token }}
+                {{form.username.label}}<div class="form-control">{{ form.username }}</div><br>
+                {{form.password.label}}<div class="form-control"> {{ form.password }}</div><br>
+                </form>
+               <input type="submit" value="Send">
+           </form>
+    {% endblock %}
+
+    Take a look at the `example
+    app <https://github.com/rochacbruno/flask_simplelogin/blob/master/example/>`__.
+
+And you can customize it in anyway you want and need, it receives a
+``form`` in context and it is a ``WTF form`` the submit should be done
+to ``request.path`` which is the same ``/login`` view.
+
+You can also use ``{% if is_logged_in %}`` in your template if needed.
+
+Customizing or translating message alerts
+-----------------------------------------
+
+The default message alerts are:
+
++-------------------+-----------------------------+
+| key               | message                     |
++===================+=============================+
+| login\_success    | login success!              |
++-------------------+-----------------------------+
+| login\_failure    | invalid credentials         |
++-------------------+-----------------------------+
+| is\_logged\_in    | already logged in           |
++-------------------+-----------------------------+
+| logout            | Logged out!                 |
++-------------------+-----------------------------+
+| login\_required   | You need to login first     |
++-------------------+-----------------------------+
+| access\_denied    | Access Denied               |
++-------------------+-----------------------------+
+| auth\_error       | Authentication Error: {0}   |
++-------------------+-----------------------------+
+
+    NOTE: the ``{0}`` in ``auth_error`` is a required placeholder to
+    pass in the validator error message.
+
+And you can customize by passing a dictionary:
+
+.. code:: python
+
+    app = Flask(__name__)
+    messages = {
+        'login_success': 'Você está dentro!',
+        'login_failure': 'ungültige Anmeldeinformationen',
+        'is_logged_in': 'Iam initium',
+        'logout': 'Déconnecté!',
+        'login_required': 'Devi prima accedere',
+        'access_denied': 'Acceso denegado',
+        'auth_error': '授權錯誤： {0}'
+    }
+    SimpleLogin(app, messages=messages)
+
+Custom validators
+-----------------
+
+Pass ``must`` argument to ``login_required`` decorator, it can be a
+``function`` or a list of ``functions`` if function returns ``None``
+means **No** error and validator passed. if function returns an
+``"Error message"`` means validator did not passed.
+
+.. code:: python
+
+    def be_admin(username):
+        """Validator to check if user has admin role"""
+        user_data = my_users.get(username)
+        if not user_data or 'admin' not in user_data.get('roles', []):
+            return "User does not have admin role"
+
+
+    def have_approval(username):
+        """Validator: all users approved so return None"""
+        return
+
+
+    @app.route('/protected')
+    @login_required(must=[be_admin, have_approval])
+    def protected():
+        return render_template('secret.html')
+
+    Take a look at the `example
+    app <https://github.com/rochacbruno/flask_simplelogin/blob/master/example/>`__.
+
+Requirements
+------------
+
+-  Flask-WTF and WTForms
+-  ``SECRET_KEY`` set in your ``app.config``
+
+Integrations
+------------
+
+Do you need Access Control? you can easily mix ``flask_simplelogin`` with ``flask_allows``
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+https://github.com/justanr/flask-allows ``pip install flask_allows``
+
+.. code:: python
+
+    from flask import Flask, g
+    from flask_simplelogin import SimpleLogin
+    from flask_allows import Allows
+
+    app = Flask(__name__)
+    app.config['SECRET_KEY'] = 'something-secret'
+
+
+    def is_staff(ident, request):
+        return ident.permlevel == 'staff'
+
+    def only_chuck_norris_can_login(user):
+        if user.get('username') == 'chuck' and user.get('password') == 'norris':
+           # Bind the logged in user data to the `g` global object
+           g.user.username = user['username']
+           g.user.permlevel = 'staff'  # set user permission level
+           return True  # Allowed
+        return False  # Denied
+
+    # init allows
+    allows = Allows(identity_loader=lambda: g.user)
+
+    # init SimpleLogin
+    SimpleLogin(app, login_checker=only_chuck_norris_can_login)
+
+    # a view which requires a logged in user to be member of the staff group
+    @app.route('/staff_only')
+    @allows.requires(is_staff)
+    @login_required
+    def a_view():
+        return "staff only can see this"
+
+Need JSON Web Token (JWT)?
+~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+Take a look at
+`Flask-JWT-Simple <https://github.com/vimalloc/flask-jwt-simple>`__ and
+of course you can mix SimpleLogin + JWT Simple
+
+.. |Travis| image:: https://img.shields.io/travis/rochacbruno/flask_simplelogin.svg?style=flat-square
+   :target: https://travis-ci.org/rochacbruno/flask_simplelogin
+.. |PyPI| image:: https://img.shields.io/pypi/v/flask_simplelogin.svg?style=flat-square
+   :target: https://pypi.org/project/flask_simplelogin/
+.. |PyPI versions| image:: https://img.shields.io/pypi/pyversions/flask_simplelogin.svg?style=flat-square
+   :target: https://pypi.org/project/flask_simplelogin/
+.. |PyPI formats| image:: https://img.shields.io/pypi/format/flask_simplelogin.svg?style=flat-square
+   :target: https://pypi.org/project/flask_simplelogin/
+.. |Flask| image:: https://img.shields.io/badge/Flask-Extension-blue.svg?style=flat-square
+   :target: https://github.com/pallets/flask
+
