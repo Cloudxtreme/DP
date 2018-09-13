@@ -1,0 +1,4 @@
+2018-09-13 10:39:14,306 Using random SECRET_KEY: 685337ac-cba3-47c4-b881-20c982252a1a, please set it on your app.config["SECRET_KEY"]
+2018-09-13 10:39:14,823 Using random SECRET_KEY: 4443dd3b-84ea-4a22-a667-2d4209013775, please set it on your app.config["SECRET_KEY"]
+2018-09-13 10:39:14,854  * Debugger is active!
+2018-09-13 10:39:22,406 radware logged in successfully

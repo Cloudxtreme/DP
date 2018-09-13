@@ -10,12 +10,14 @@ Autor: alexfrancow
 from flask import Flask, redirect
 from flask_simplelogin import SimpleLogin
 import requests, os
+import logging
 
 ################
 #### config ####
 ################
 
 app = Flask(__name__, instance_relative_config=True)
+logging.basicConfig(filename='app.log',level=logging.WARNING,format='%(asctime)s %(message)s')
 
 def visionLogin(user):
     """:param user: dict {'username': 'foo', 'password': 'bar'}"""
@@ -31,6 +33,7 @@ def visionLogin(user):
     print(response)
     if 'Exception' in response:
        return False
+    logging.warning('%s logged in successfully', username)
     return True
 
 SimpleLogin(app, login_checker=visionLogin)
