@@ -32,6 +32,7 @@ def visionLogin(user):
     response = r.json()
     print(response)
     if 'Exception' in response:
+       logging.warning('%s attempted to login', username)
        return False
     logging.warning('%s logged in successfully', username)
     return True
