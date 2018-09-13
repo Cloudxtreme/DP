@@ -7,7 +7,7 @@ Autor: alexfrancow
 #### imports ####
 #################
 
-from flask import Flask, render_template
+from flask import Flask, redirect
 from flask_simplelogin import SimpleLogin
 import requests, os
 
@@ -52,4 +52,4 @@ app.register_blueprint(whitelist_blueprint)
 @app.route('/', methods=['GET', 'POST'])
 def home():
     """Render homepage"""
-    return render_template('home.html')
+    return redirect("/blacklist", code=302)

@@ -1,15 +1,19 @@
 /*LOGIN*/
 .center_div{
     margin: 0 auto;
-    width:40% /* value of your choice which suits your alignment */
+    width:40% !important; /* value of your choice which suits your alignment */
+    margin-top: 10%;
 }
 
+#loginform {
+	padding: 5%;
+}
 
 #particles-js {
   position: absolute;
   width: 100%;
   height: 100%;
-	background: #000;
+	background: #000022;
 	z-index: -1;
 }
 
