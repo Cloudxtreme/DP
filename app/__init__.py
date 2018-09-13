@@ -23,6 +23,10 @@ def visionLogin(user):
     """:param user: dict {'username': 'foo', 'password': 'bar'}"""
     username = user.get('username')
     password = user.get('password')
+    global VisionUser
+    global VisionPasswd
+    VisionUser = username
+    VisionPasswd = password
     VisionIP = '192.168.0.76'
 
     s = requests.Session()

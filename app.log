@@ -4,3 +4,111 @@
 2018-09-13 10:55:51,324 alexfrancow attempted to login
 2018-09-13 10:55:55,298 paco attempted to login
 2018-09-13 10:56:00,684 radware logged in successfully
+2018-09-13 10:57:37,780 Using random SECRET_KEY: b13f6e51-367e-4e37-aa90-d5b5853fce6a, please set it on your app.config["SECRET_KEY"]
+2018-09-13 10:57:38,578 Using random SECRET_KEY: 4555dc8c-fd2e-42d9-970c-0787ac8ac7df, please set it on your app.config["SECRET_KEY"]
+2018-09-13 10:57:38,614  * Debugger is active!
+2018-09-13 10:57:49,778 radware logged in successfully
+2018-09-13 11:00:11,261 radware logged in successfully
+2018-09-13 11:01:34,619 Using random SECRET_KEY: 8f3e2ff4-ad3a-4d71-b51c-b741af375a91, please set it on your app.config["SECRET_KEY"]
+2018-09-13 11:01:35,182 Using random SECRET_KEY: 650b04ed-067e-46e0-8df3-11d0f184cabb, please set it on your app.config["SECRET_KEY"]
+2018-09-13 11:01:35,216  * Debugger is active!
+2018-09-13 11:01:40,857 radware logged in successfully
+2018-09-13 11:04:11,633 Using random SECRET_KEY: fd6edfc8-f1d2-4b40-b36c-dde94a876c09, please set it on your app.config["SECRET_KEY"]
+2018-09-13 11:04:12,456 Using random SECRET_KEY: 3afaad28-77c5-4655-8556-816d7ef319a3, please set it on your app.config["SECRET_KEY"]
+2018-09-13 11:04:12,495  * Debugger is active!
+2018-09-13 11:04:19,991 radware logged in successfully
+2018-09-13 11:06:53,093 Using random SECRET_KEY: d696a28f-e29d-4ce6-aa05-c45f84388fe1, please set it on your app.config["SECRET_KEY"]
+2018-09-13 11:07:03,182 Using random SECRET_KEY: 1c826e72-20e8-470a-aca5-4abb9bd0602d, please set it on your app.config["SECRET_KEY"]
+2018-09-13 11:07:03,200 Using random SECRET_KEY: 3176114f-1d7f-43d5-94ef-feb4fa5eca5f, please set it on your app.config["SECRET_KEY"]
+2018-09-13 11:07:14,760 Using random SECRET_KEY: 2c78d878-6386-4b0a-b159-150199102b80, please set it on your app.config["SECRET_KEY"]
+2018-09-13 11:07:14,779 Using random SECRET_KEY: 1ecf4aa7-e282-4512-a3a1-cb901b53b62b, please set it on your app.config["SECRET_KEY"]
+2018-09-13 11:08:01,199 Using random SECRET_KEY: f8593ba2-795e-4cc6-94ee-c38a4b0f6fb5, please set it on your app.config["SECRET_KEY"]
+2018-09-13 11:08:01,218 Using random SECRET_KEY: 41378a74-ab62-4832-a628-938793f4bba9, please set it on your app.config["SECRET_KEY"]
+2018-09-13 11:08:31,573 Using random SECRET_KEY: b4b1b9db-0297-4e75-ac8a-30e66da44abd, please set it on your app.config["SECRET_KEY"]
+2018-09-13 11:08:59,297 Using random SECRET_KEY: b95a5d9f-81bd-4d22-bfbf-cc73e5fd3a3c, please set it on your app.config["SECRET_KEY"]
+2018-09-13 11:08:59,851 Using random SECRET_KEY: 683c84ee-c96a-46cc-b9d4-b1cdaf6f2c85, please set it on your app.config["SECRET_KEY"]
+2018-09-13 11:08:59,883  * Debugger is active!
+2018-09-13 11:09:07,776 radware logged in successfully
+2018-09-13 11:10:18,695 Using random SECRET_KEY: 41dca3e5-9c27-408c-97c1-a06a50b5624f, please set it on your app.config["SECRET_KEY"]
+2018-09-13 11:11:42,645 Using random SECRET_KEY: c3431b47-36e8-4820-a172-f76ad5924e0d, please set it on your app.config["SECRET_KEY"]
+2018-09-13 11:11:54,153 Using random SECRET_KEY: 3043440e-c4ca-406e-85fb-1066d4dc4627, please set it on your app.config["SECRET_KEY"]
+2018-09-13 11:11:54,653 Using random SECRET_KEY: 51306f23-30aa-48b3-97de-2f5664ad37d2, please set it on your app.config["SECRET_KEY"]
+2018-09-13 11:11:54,685  * Debugger is active!
+2018-09-13 11:12:28,522 Using random SECRET_KEY: ad444049-8cd7-47dc-87b0-d0eb85a8d8d1, please set it on your app.config["SECRET_KEY"]
+2018-09-13 11:12:29,068 Using random SECRET_KEY: 1af17c0d-7c70-4694-ba65-cbda3d88f2ea, please set it on your app.config["SECRET_KEY"]
+2018-09-13 11:12:29,103  * Debugger is active!
+2018-09-13 11:12:34,850 radware logged in successfully
+2018-09-13 11:13:06,792 Using random SECRET_KEY: abe59f7c-eddd-47e4-af07-9647d1110f32, please set it on your app.config["SECRET_KEY"]
+2018-09-13 11:13:07,407 Using random SECRET_KEY: 6bbb19e4-e7d1-40d0-82a1-adeb24001ad7, please set it on your app.config["SECRET_KEY"]
+2018-09-13 11:13:07,449  * Debugger is active!
+2018-09-13 11:13:13,156 radware logged in successfully
+2018-09-13 11:13:45,954 Using random SECRET_KEY: 119b77d2-0fce-4774-b1f3-126fba325f8c, please set it on your app.config["SECRET_KEY"]
+2018-09-13 11:13:46,483 Using random SECRET_KEY: c739a808-0d75-4f24-8688-ff88ecd2d4f1, please set it on your app.config["SECRET_KEY"]
+2018-09-13 11:13:46,520  * Debugger is active!
+2018-09-13 11:13:54,805 radware logged in successfully
+2018-09-13 11:14:17,488 Using random SECRET_KEY: 10ed53f5-97e1-400b-be5f-2ba5c86ccd3d, please set it on your app.config["SECRET_KEY"]
+2018-09-13 11:14:18,042 Using random SECRET_KEY: c03f994a-42a1-4026-909f-b8a1f4a57674, please set it on your app.config["SECRET_KEY"]
+2018-09-13 11:14:18,128  * Debugger is active!
+2018-09-13 11:14:23,597 radware logged in successfully
+2018-09-13 11:15:46,139 Using random SECRET_KEY: c4fe13ef-6967-43ed-a2a5-a64cea0d61a3, please set it on your app.config["SECRET_KEY"]
+2018-09-13 11:15:47,089 Using random SECRET_KEY: 88fb2806-1038-4dec-800c-04b404fb1731, please set it on your app.config["SECRET_KEY"]
+2018-09-13 11:15:47,134  * Debugger is active!
+2018-09-13 11:15:53,226 radware logged in successfully
+2018-09-13 11:19:01,966 Using random SECRET_KEY: 7759cc57-ff17-4d58-bd49-155e1aa59581, please set it on your app.config["SECRET_KEY"]
+2018-09-13 11:19:02,477 Using random SECRET_KEY: 41ed1bf9-267f-4d19-90bc-bffeccdbba87, please set it on your app.config["SECRET_KEY"]
+2018-09-13 11:19:02,511  * Debugger is active!
+2018-09-13 11:19:09,564 radware logged in successfully
+2018-09-13 11:19:26,964 Using random SECRET_KEY: 224a2a9f-860a-489e-adcd-251c6377c698, please set it on your app.config["SECRET_KEY"]
+2018-09-13 11:19:27,580 Using random SECRET_KEY: 92866dfb-0667-49a8-84e7-2a0a53f90363, please set it on your app.config["SECRET_KEY"]
+2018-09-13 11:19:27,614  * Debugger is active!
+2018-09-13 11:19:33,636 radware attempted to login
+2018-09-13 11:19:39,160 radware logged in successfully
+2018-09-13 11:19:55,688 Using random SECRET_KEY: f87ada9f-e48c-4075-8f8e-cd0994f085cd, please set it on your app.config["SECRET_KEY"]
+2018-09-13 11:19:56,224 Using random SECRET_KEY: a68c383a-fc32-4e78-bfd3-d98e8c924281, please set it on your app.config["SECRET_KEY"]
+2018-09-13 11:19:56,272  * Debugger is active!
+2018-09-13 11:20:02,395 radware logged in successfully
+2018-09-13 11:20:02,465 Using random SECRET_KEY: ec064e81-a261-4dc5-8e50-ecf2dc44d0a8, please set it on your app.config["SECRET_KEY"]
+2018-09-13 11:21:44,672 Using random SECRET_KEY: aaf84edf-6920-4392-a003-ec551f415a2b, please set it on your app.config["SECRET_KEY"]
+2018-09-13 11:21:45,610 Using random SECRET_KEY: ab3b6a86-23cc-496d-b190-c3c57804008e, please set it on your app.config["SECRET_KEY"]
+2018-09-13 11:21:45,686  * Debugger is active!
+2018-09-13 11:21:50,954 radware logged in successfully
+2018-09-13 11:22:07,123 Using random SECRET_KEY: 0e08a94f-759c-4b91-8190-f28c71eb3be4, please set it on your app.config["SECRET_KEY"]
+2018-09-13 11:22:07,743 Using random SECRET_KEY: c01ee0ae-272d-4b8c-bd5b-c2fc624813fb, please set it on your app.config["SECRET_KEY"]
+2018-09-13 11:22:07,780  * Debugger is active!
+2018-09-13 11:22:12,848 radware logged in successfully
+2018-09-13 11:22:31,685 Using random SECRET_KEY: 2fe027c3-1fe6-4549-8a31-24b3fbd513fe, please set it on your app.config["SECRET_KEY"]
+2018-09-13 11:22:32,238 Using random SECRET_KEY: 6778030f-f2dc-48df-8c48-f471cb4c7fbb, please set it on your app.config["SECRET_KEY"]
+2018-09-13 11:22:32,271  * Debugger is active!
+2018-09-13 11:22:42,913 radware logged in successfully
+2018-09-13 11:24:08,418 Using random SECRET_KEY: c5b6d9b6-0721-450a-a6cf-91ad2fc885b8, please set it on your app.config["SECRET_KEY"]
+2018-09-13 11:24:08,967 Using random SECRET_KEY: ae7c237e-524d-4c0c-b2c2-b86012fbb71e, please set it on your app.config["SECRET_KEY"]
+2018-09-13 11:24:09,003  * Debugger is active!
+2018-09-13 11:24:17,337 radware logged in successfully
+2018-09-13 11:25:26,152 Using random SECRET_KEY: ceeff3a2-c4ff-4739-9581-1eee424e321b, please set it on your app.config["SECRET_KEY"]
+2018-09-13 11:25:26,682 Using random SECRET_KEY: f72b0205-c2f6-4b17-8811-318320a2b3b4, please set it on your app.config["SECRET_KEY"]
+2018-09-13 11:25:26,713  * Debugger is active!
+2018-09-13 11:25:35,907 Using random SECRET_KEY: d8bdf590-9984-49c8-b82d-fbe1ba021533, please set it on your app.config["SECRET_KEY"]
+2018-09-13 11:25:36,549 Using random SECRET_KEY: 75d31af6-e2b2-4c43-963e-ddf5301f6dda, please set it on your app.config["SECRET_KEY"]
+2018-09-13 11:25:36,581  * Debugger is active!
+2018-09-13 11:25:42,204 radware logged in successfully
+2018-09-13 11:27:50,904 Using random SECRET_KEY: 9fd26221-5130-4f93-bcf0-5140bcc766ec, please set it on your app.config["SECRET_KEY"]
+2018-09-13 11:27:51,431 Using random SECRET_KEY: ae3eedc7-4e43-4b80-bc15-b047c7d652d4, please set it on your app.config["SECRET_KEY"]
+2018-09-13 11:27:51,463  * Debugger is active!
+2018-09-13 11:27:57,859 radware logged in successfully
+2018-09-13 11:30:35,190 Using random SECRET_KEY: 62f5e2b5-c303-4be5-8330-c2104616ff79, please set it on your app.config["SECRET_KEY"]
+2018-09-13 11:30:35,688 Using random SECRET_KEY: 4e464d45-9c40-4473-bee3-8bcf22558b5c, please set it on your app.config["SECRET_KEY"]
+2018-09-13 11:30:35,723  * Debugger is active!
+2018-09-13 11:30:42,738 radware attempted to login
+2018-09-13 11:30:48,958 radware logged in successfully
+2018-09-13 11:31:20,891 Using random SECRET_KEY: 1d7b9cc0-d1f0-457e-95ff-934ed3300813, please set it on your app.config["SECRET_KEY"]
+2018-09-13 11:31:21,430 Using random SECRET_KEY: 41472dac-0bf1-45c8-b320-7683248ba22b, please set it on your app.config["SECRET_KEY"]
+2018-09-13 11:31:21,466  * Debugger is active!
+2018-09-13 11:31:26,978 radware logged in successfully
+2018-09-13 11:31:58,033 Using random SECRET_KEY: 402527d5-99c3-4bcb-a451-edc1200e79e2, please set it on your app.config["SECRET_KEY"]
+2018-09-13 11:31:58,714 Using random SECRET_KEY: 0bfc5c97-1580-4eeb-9e19-40e9920b4c3f, please set it on your app.config["SECRET_KEY"]
+2018-09-13 11:31:58,746  * Debugger is active!
+2018-09-13 11:32:03,765 radware logged in successfully
+2018-09-13 11:32:54,300 Using random SECRET_KEY: 1ca2d346-9124-49d8-8370-5a10cde08077, please set it on your app.config["SECRET_KEY"]
+2018-09-13 11:32:54,908 Using random SECRET_KEY: f1cf4455-c093-4cae-93d2-76f666ec1248, please set it on your app.config["SECRET_KEY"]
+2018-09-13 11:32:54,941  * Debugger is active!
+2018-09-13 11:33:00,447 radware logged in successfully

@@ -36,17 +36,20 @@ ajax_blueprint = Blueprint('ajax', __name__, template_folder='templates')
 
 app = Flask(__name__)
 global VisionIP
-global VisionUser
-global VisionPasswd
+#global VisionUser
+#global VisionPasswd
 VisionIP = "192.168.0.76"
-VisionUser = "radware"
-VisionPasswd = "abc1234..."
+#VisionUser = "radware"
+#VisionPasswd = "abc1234..."
 
 ###################
 #### functions ####
 ###################
 
 def login():
+    import app
+    VisionUser = app.VisionUser
+    VisionPasswd = app.VisionPasswd
     #Create a session to login
     s = requests.Session()
     loginurl = 'https://'+VisionIP+'/mgmt/system/user/login'
