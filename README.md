@@ -6,7 +6,7 @@ A simple admin panel to manage a DefensePro.
 </p>
 
 ## Configure
-Change the Vision IP Address, user and password on ```app/views.py```:
+Change the Vision IP Address on ```app/views.py```:
 
 ```python
 ################
@@ -14,8 +14,6 @@ Change the Vision IP Address, user and password on ```app/views.py```:
 ################
 
 VisionIP = "<IP>"
-VisionUser = "<USER>"
-VisionPasswd = "<PASSWORD>"
 ```
 
 ## Usage
