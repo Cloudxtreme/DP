@@ -2,7 +2,7 @@
 .center_div{
     margin: 0 auto;
     width:40% !important; /* value of your choice which suits your alignment */
-    margin-top: 10%;
+    margin-top: 5%;
 }
 
 #loginform {
@@ -119,8 +119,21 @@
         margin-left: 0 !important;
     }
     #hide {
-        display: none;
+        display: non;
     }
+    #img_defensepro{
+	display:none;
+    }
+    #dpSelect {
+	width:100%;
+    }
+    #divFixed{
+        width:100% !important;
+    }
+    #divFixed ul{
+ 	width:100%;
+    }
+
 }
 
 
@@ -139,8 +152,13 @@
 }
 
 #divFixed #hide {
-        line-height: 115px;
-	width: 10%;
+	padding: 5%;
+	border-radius: 50%;
+	margin-top:2%;
+}
+
+#divFixed ul {
+	border-radius: 2%;
 }
 
 .sidebar {
