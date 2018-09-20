@@ -28,13 +28,13 @@ $ python run.py
 
 ## Screenshots
 
-### Add multiple IPs to Black List
+### Login with Vision users
 
-<kbd><img src="https://raw.githubusercontent.com/alexfrancow/DP/master/PoC/8.png" /></kbd>
+<kbd><img src="https://raw.githubusercontent.com/alexfrancow/DP/master/PoC/11.png" /></kbd>
 
-### Add multiple IPs to White List
+### Add multiple IPs to White List / Black List
 
-<kbd><img src="https://raw.githubusercontent.com/alexfrancow/DP/master/PoC/9.png" /></kbd>
+<kbd><img src="https://raw.githubusercontent.com/alexfrancow/DP/master/PoC/10.png" /></kbd>
 
 ### Modify network protection policies
 
