@@ -2,7 +2,7 @@
 .center_div{
     margin: 0 auto;
     width:40% !important; /* value of your choice which suits your alignment */
-    margin-top: 5%;
+    /*margin-top: 5%;*/
 }
 
 #loginform {
@@ -27,7 +27,8 @@
 
 #blacklist-form {
 	/*background-color: #222222 !important;*/
-	background-color: rgba(2, 2, 2, 0.75);
+	/*background-color: rgba(2, 2, 2, 0.75);*/
+	background-color:#343a40;
 }
 
 .list-warning {
@@ -88,17 +89,21 @@
 	width: 15%;
 	float: left;
 	height: 100%;
-	background-color: #008cba;
+	/*background-color: #008cba;*/
+	/*background-color: rgb(233,236,239);*/
+	background-color: #fff;
 	padding: 1%;
 	border: 1px solid rgba(0,0,0,.125);
 }
 
 .sidebar li a {
-	color: white;
+	color: #1c1b1a;
+	font-size:14px;
 }
 
 .sidebar li a:hover {
-	background-color: #173b67;
+	/*background-color: #173b67;*/
+
 	padding-left: 5px;
 }
 

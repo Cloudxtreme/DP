@@ -20,6 +20,7 @@ import requests
 from requests import Request, Session
 
 from flask_simplelogin import login_required
+import logging
 
 ####################
 #### blueprints ####
@@ -41,6 +42,7 @@ global VisionIP
 VisionIP = "192.168.0.76"
 #VisionUser = "radware"
 #VisionPasswd = "abc1234..."
+logging.basicConfig(filename='app.log',level=logging.WARNING,format='%(asctime)s %(message)s')
 
 ###################
 #### functions ####
@@ -59,7 +61,7 @@ def login():
     #Try login
     r = s.post(loginurl, verify=False, json=loginArgs)
     r.json()
-    return s
+    return s, VisionUser
 
 def lock(s, device):
     #Lock DefensePro device
@@ -289,7 +291,7 @@ def get_policyAction(s, *device):
 
 @ajax_blueprint.route('/_select_DP', methods=['GET'])
 def select_DP():
-	s = login()
+	s, VisionUser = login()
 	device = request.args.get('a')
 	# Get Rules from device
 	RulesName = get_rulesName(s, device)
@@ -317,7 +319,7 @@ def select_DP():
 @blacklist_blueprint.route('/blacklist', methods=['GET', 'POST'])
 @login_required
 def banlist():
-    s = login()
+    s, VisionUser = login()
     error = ""
     success = ""
 
@@ -333,14 +335,15 @@ def banlist():
 
         refresh_policies(s, device)
         unlock(s, device)
+        logging.warning('%s added the following IPs to the BlackList: %s', VisionUser, success)
     DPName, DPIP = get_DPList(s)
     DPDevices = zip(DPName, DPIP)
-    return render_template('blacklist.html', DPDevices=DPDevices, error=error, success=success)
+    return render_template('blacklist.html', DPDevices=DPDevices, error=error, success=success, VisionUser=VisionUser)
 
 @whitelist_blueprint.route('/whitelist', methods=['GET', 'POST'])
 @login_required
 def whitelist():
-    s = login()
+    s, VisionUser = login()
     error = ""
     success = ""
 
@@ -356,29 +359,51 @@ def whitelist():
 
         refresh_policies(s, device)
         unlock(s, device)
+        logging.warning('%s added the following IPs to the WhiteList: %s', VisionUser, success)
     DPName, DPIP = get_DPList(s)
     DPDevices = zip(DPName, DPIP)
-    return render_template('whitelist.html', DPDevices=DPDevices, error=error, success=success)
+    return render_template('whitelist.html', DPDevices=DPDevices, error=error, success=success, VisionUser=VisionUser)
 
 @policies_blueprint.route('/policies', methods=['GET', 'POST'])
 @login_required
 def policies(*RulesName, **RulesAction):
-    s = login()
+    s, VisionUser = login()
     DPName, DPIP = get_DPList(s)
     DPDevices = zip(DPName, DPIP)
 
     if request.method == 'POST':
         device = request.form['device']
         RulesName = get_rulesName(s, device)
+        RulesAction = get_policyAction(s, device)
+        # Save old policies (Policies before changed)
+        oldEnablePolicies = zip(RulesName, RulesAction)
+        old = list(zip(oldEnablePolicies))
 
+        # Save new policies
         enables = request.form.getlist('enables[]')
         enablePolicies = zip(RulesName, enables)
+        # I don't know why is necessary create another var..
+        enablePolicies2 = zip(RulesName, enables)
+        new = list(zip(enablePolicies2))
+
         lock(s, device)
         time.sleep(1)
         update_Policies(s, enablePolicies)
         time.sleep(1)
         unlock(s, device)
         refresh_policies(s, device)
+
+        # Log changed policies     
+        # Compare two zips and get the changed value
+        oldynew = zip(old, new)
+        oldynew = [x1 if x1!=x2 else '' for x1, x2 in oldynew]
+        # Remove white values..
+        for x in oldynew:
+            if x!= '':
+                oldynew = x
+
+        logging.warning('%s changed the following policies: %s', VisionUser, oldynew)
         return redirect('/policies')
 
-    return render_template('policies.html', DPDevices=DPDevices)
+    return render_template('policies.html', DPDevices=DPDevices, VisionUser=VisionUser)
+
