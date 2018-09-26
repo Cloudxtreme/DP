@@ -40,5 +40,5 @@ $ python run.py
 
 ### Modify network protection policies
 
-<kbd><img src="https://raw.githubusercontent.com/alexfrancow/DP/master/PoC/7.png" /></kbd>
+<kbd><img src="https://raw.githubusercontent.com/alexfrancow/DP/master/PoC/2018-09-26_105913.png" /></kbd>
 ---
