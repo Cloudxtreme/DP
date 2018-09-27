@@ -42,3 +42,9 @@ $ python run.py
 
 <kbd><img src="https://raw.githubusercontent.com/alexfrancow/DP/master/PoC/2018-09-26_105913.png" /></kbd>
 ---
+
+## PoC
+
+<p align="center">
+  <img src="https://raw.githubusercontent.com/alexfrancow/DP/master/PoC/ezgif-2-15ad3122f5.gif"/>
+</p>
