@@ -397,11 +397,14 @@ def policies(*RulesName, **RulesAction):
         # Compare two zips and get the changed value
         oldynew = zip(old, new)
         oldynew = [x1 if x1!=x2 else '' for x1, x2 in oldynew]
+
         # Remove white values..
         for x in oldynew:
             if x!= '':
                 oldynew = x
 
+        #Report Only ~ rsIDSNewRulesAction: 0
+        #Block and Report ~ rsIDSNewRulesAction: 1
         logging.warning('%s changed the following policies: %s', VisionUser, oldynew)
         return redirect('/policies')
 
