@@ -52,6 +52,6 @@ $ python run.py
 ## Crontab to manage logs
 
 ```bash
-0 5 * * * mv /opt/DP/app.log /opt/DP/app.log-$(date +\%Y\%m\%d\%H\%M\%S) && touch /opt/DP/app.log
+0 5 * * * mv /opt/DP/app.log /opt/DP/app.log-$(date +\%Y\%m\%d\%H\%M\%S) && touch /opt/DP/app.log && pkill -9 -f /opt/DP/run.py && python3 /opt/DP/run.py
 0 5 * * * find /opt/DP/app.log* -mtime +7 -exec rm {} \;
 ```
