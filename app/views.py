@@ -403,6 +403,8 @@ def policies(*RulesName, **RulesAction):
             if x!= '':
                 oldynew = x
 
+        oldynew = ''.join(str(e) for e in oldynew)
+
         #Report Only ~ rsIDSNewRulesAction: 0
         #Block and Report ~ rsIDSNewRulesAction: 1
         logging.warning('%s changed the following policies: %s', VisionUser, oldynew)

@@ -1,0 +1,9 @@
+2018-09-28 08:45:41,793 Using random SECRET_KEY: 684bad73-58af-4d5b-96b8-2759d62b04a2, please set it on your app.config["SECRET_KEY"]
+2018-09-28 08:45:42,055 Using random SECRET_KEY: b80c82f6-c6ff-4fb4-8c97-ad23ee346c8d, please set it on your app.config["SECRET_KEY"]
+2018-09-28 08:45:42,074  * Debugger is active!
+2018-09-28 08:48:02,375 Using random SECRET_KEY: 199d004a-9374-4902-b079-85a635535999, please set it on your app.config["SECRET_KEY"]
+2018-09-28 08:48:02,624 Using random SECRET_KEY: 8ada59ff-6d89-4b37-8199-d090c87c81d3, please set it on your app.config["SECRET_KEY"]
+2018-09-28 08:48:02,642  * Debugger is active!
+2018-09-28 08:52:28,668 Using random SECRET_KEY: e1052444-f985-4b95-978c-9b671a7f8eb0, please set it on your app.config["SECRET_KEY"]
+2018-09-28 08:52:28,945 Using random SECRET_KEY: 931bf314-11e3-47c5-9065-63fea3d6e718, please set it on your app.config["SECRET_KEY"]
+2018-09-28 08:52:28,971  * Debugger is active!

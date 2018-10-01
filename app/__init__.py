@@ -7,7 +7,7 @@ Autor: alexfrancow
 #### imports ####
 #################
 
-from flask import Flask, redirect
+from flask import Flask, redirect, flash
 from flask_simplelogin import SimpleLogin
 import requests, os
 import logging
@@ -29,17 +29,20 @@ def visionLogin(user):
     VisionPasswd = password
     VisionIP = '192.168.0.76'
 
-    s = requests.Session()
-    loginurl = 'https://'+VisionIP+'/mgmt/system/user/login'
-    loginArgs = {'username': username,'password':password}
-    r = s.post(loginurl, verify=False, json=loginArgs)
-    response = r.json()
-    print(response)
-    if 'Exception' in response:
-       logging.warning('%s attempted to login', username)
-       return False
-    logging.warning('%s logged in successfully', username)
-    return True
+    try:
+        s = requests.Session()
+        loginurl = 'https://'+VisionIP+'/mgmt/system/user/login'
+        loginArgs = {'username': username,'password':password}
+        r = s.post(loginurl, verify=False, json=loginArgs)
+        response = r.json()
+        print(response)
+        if 'Exception' in response:
+           logging.warning('%s attempted to login', username)
+           return False
+        logging.warning('%s logged in successfully', username)
+        return True
+    except:
+        flash(u'ups! Vision does not respond, make sure your Vision is alive.', 'danger')
 
 SimpleLogin(app, login_checker=visionLogin)
 

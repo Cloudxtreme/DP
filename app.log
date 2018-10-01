@@ -1,9 +1,43 @@
-2018-09-28 08:45:41,793 Using random SECRET_KEY: 684bad73-58af-4d5b-96b8-2759d62b04a2, please set it on your app.config["SECRET_KEY"]
-2018-09-28 08:45:42,055 Using random SECRET_KEY: b80c82f6-c6ff-4fb4-8c97-ad23ee346c8d, please set it on your app.config["SECRET_KEY"]
-2018-09-28 08:45:42,074  * Debugger is active!
-2018-09-28 08:48:02,375 Using random SECRET_KEY: 199d004a-9374-4902-b079-85a635535999, please set it on your app.config["SECRET_KEY"]
-2018-09-28 08:48:02,624 Using random SECRET_KEY: 8ada59ff-6d89-4b37-8199-d090c87c81d3, please set it on your app.config["SECRET_KEY"]
-2018-09-28 08:48:02,642  * Debugger is active!
-2018-09-28 08:52:28,668 Using random SECRET_KEY: e1052444-f985-4b95-978c-9b671a7f8eb0, please set it on your app.config["SECRET_KEY"]
-2018-09-28 08:52:28,945 Using random SECRET_KEY: 931bf314-11e3-47c5-9065-63fea3d6e718, please set it on your app.config["SECRET_KEY"]
-2018-09-28 08:52:28,971  * Debugger is active!
+2018-10-01 10:04:12,602 Using random SECRET_KEY: 8677e439-c4bb-4c26-a284-48c88e3151c9, please set it on your app.config["SECRET_KEY"]
+2018-10-01 10:04:12,915 Using random SECRET_KEY: 6d8c2764-6fb2-4596-a885-7475d636708a, please set it on your app.config["SECRET_KEY"]
+2018-10-01 10:04:12,941  * Debugger is active!
+2018-10-01 10:13:16,152 Using random SECRET_KEY: 697941d9-fb2d-44a9-af9a-9027c10f2295, please set it on your app.config["SECRET_KEY"]
+2018-10-01 10:13:16,419 Using random SECRET_KEY: c3c94be6-4c2f-4fa9-b7eb-a4b4af9ff048, please set it on your app.config["SECRET_KEY"]
+2018-10-01 10:13:16,445  * Debugger is active!
+2018-10-01 10:13:25,982 radware logged in successfully
+2018-10-01 10:15:02,417 Using random SECRET_KEY: 98b3063a-e3cd-468f-8ff2-ec191d88c554, please set it on your app.config["SECRET_KEY"]
+2018-10-01 10:15:02,735 Using random SECRET_KEY: 9cb22453-069c-4bc3-bd1f-0a4fde751fb5, please set it on your app.config["SECRET_KEY"]
+2018-10-01 10:15:02,755  * Debugger is active!
+2018-10-01 10:16:34,298 Using random SECRET_KEY: 166af545-3fd0-47e3-9067-513be7affe23, please set it on your app.config["SECRET_KEY"]
+2018-10-01 10:16:34,628 Using random SECRET_KEY: 734d37bc-e8c2-452f-8dad-7f9afc034d11, please set it on your app.config["SECRET_KEY"]
+2018-10-01 10:16:34,648  * Debugger is active!
+2018-10-01 10:18:14,788 Using random SECRET_KEY: 7f07faea-d138-4ced-bb59-0fed2b891980, please set it on your app.config["SECRET_KEY"]
+2018-10-01 10:18:15,130 Using random SECRET_KEY: 34ed8800-d316-4cd0-94b8-f1264b7f8550, please set it on your app.config["SECRET_KEY"]
+2018-10-01 10:18:15,156  * Debugger is active!
+2018-10-01 10:19:39,780 Using random SECRET_KEY: 4266aac8-30e3-44d6-a7dc-ba34548437c1, please set it on your app.config["SECRET_KEY"]
+2018-10-01 10:19:40,118 Using random SECRET_KEY: 6fb1bc89-47fd-4904-a44a-ace920e2eb1d, please set it on your app.config["SECRET_KEY"]
+2018-10-01 10:19:40,145  * Debugger is active!
+2018-10-01 10:24:40,267 Using random SECRET_KEY: 76de1477-83cc-4653-9543-38437be8274b, please set it on your app.config["SECRET_KEY"]
+2018-10-01 10:24:40,288  * Debugger is active!
+2018-10-01 10:54:25,995 radware logged in successfully
+2018-10-01 10:54:38,851 radware changed the following policies: ('Policy2', '0')
+2018-10-01 10:54:57,025 radware changed the following policies: ('Policy6', '0')
+2018-10-01 10:55:08,868 radware added the following IPs to the BlackList: [[]]
+2018-10-01 10:55:19,013 radware added the following IPs to the BlackList: [['10.0.2.2']]
+2018-10-01 10:56:53,917 Using random SECRET_KEY: 19294a8d-eaee-43de-86db-47bea5956ac3, please set it on your app.config["SECRET_KEY"]
+2018-10-01 10:56:53,948  * Debugger is active!
+2018-10-01 10:56:58,471 radware logged in successfully
+2018-10-01 10:57:06,717 radware changed the following policies: ['Block and Report', 'Block and Report', 'Block and Report', 'Block and Report', 'Block and Report', 'Block and Report', 'Block and Report', 'Block and Report', 'Block and Report', 'Block and Report', 'Block and Report', 'Block and Report', 'Block and Report', 'Block and Report', 'Block and Report', 'Block and Report']
+2018-10-01 10:57:29,492 Using random SECRET_KEY: 0b035012-76bb-4534-bbae-ac4786a80b97, please set it on your app.config["SECRET_KEY"]
+2018-10-01 10:57:29,514  * Debugger is active!
+2018-10-01 10:57:32,627 radware logged in successfully
+2018-10-01 10:57:41,642 radware changed the following policies: ('Policy2', '0')
+2018-10-01 11:42:35,120 Using random SECRET_KEY: 32594c06-5b5f-4266-8486-2d1bbee56d79, please set it on your app.config["SECRET_KEY"]
+2018-10-01 11:42:35,466 Using random SECRET_KEY: 75982593-6d03-4ef2-ab74-2201f1f62385, please set it on your app.config["SECRET_KEY"]
+2018-10-01 11:42:35,492  * Debugger is active!
+2018-10-01 11:42:42,662 radware logged in successfully
+2018-10-01 11:43:05,838 radware changed the following policies: ('Policy2', '1')
+2018-10-01 11:45:10,359 radware changed the following policies: ('Policy2', '0')
+2018-10-01 11:45:23,523 radware logged in successfully
+2018-10-01 11:50:37,190 radware logged in successfully
+2018-10-01 11:50:53,263 radware logged in successfully
