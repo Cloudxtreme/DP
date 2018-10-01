@@ -16,7 +16,7 @@ Change the Vision IP Address on ```app/views.py```:
 VisionIP = "<IP>"
 ```
 
-## Usage
+## Usage with venv
 
 ```bash
 $ . venv/bin/activate
@@ -25,6 +25,15 @@ Python 3.5.2
 $ python run.py
 * Running on http://127.0.0.1:5000/ (Press CTRL+C to quit)
 ```
+
+## Usage
+
+```bash
+$ pip3 install -r requirements.txt
+$ python3 run.py
+* Running on http://127.0.0.1:5000/ (Press CTRL+C to quit)
+```
+
 
 > Logs are saved in: ```app.log```
 
